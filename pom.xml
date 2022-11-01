@@ -12,7 +12,12 @@
   </properties>
 
   <dependencies>
-  	<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+  <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20220924</version>
+  </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 	<dependency>
 	    <groupId>commons-codec</groupId>
 	    <artifactId>commons-codec</artifactId>
