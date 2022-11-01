@@ -1,6 +1,6 @@
-package br.arcabouço.app;
+package br.ufmg.app;
 
-import br.arcabouço.utils.Singleton;
+import br.ufmg.utils.Singleton;
 
 /* Parâmetros:
  * instancias -> numero de processos que acessam urls ao mesmo tempo.

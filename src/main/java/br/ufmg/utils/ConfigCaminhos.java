@@ -1,4 +1,4 @@
-package br.arcabouço.utils;
+package br.ufmg.utils;
 
 import java.util.Date;
 import java.net.InetAddress;

@@ -1,4 +1,4 @@
-package br.arcabouço.utils;
+package br.ufmg.utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package br.arcabouço.utils;
+package br.ufmg.utils;
 
 public class Par implements Comparable<Par> {
 	private final String x;

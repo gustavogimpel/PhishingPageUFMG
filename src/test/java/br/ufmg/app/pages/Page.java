@@ -1,4 +1,4 @@
-package br.cert.app.pages;
+package br.ufmg.app.pages;
 
 import org.openqa.selenium.WebDriver;
 

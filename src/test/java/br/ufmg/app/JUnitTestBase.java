@@ -1,4 +1,4 @@
-package br.cert.app;
+package br.ufmg.app;
 
 import java.net.URL;
 

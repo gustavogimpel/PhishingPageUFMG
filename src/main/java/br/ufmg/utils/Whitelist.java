@@ -1,4 +1,4 @@
-package br.arcabouço.utils;
+package br.ufmg.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Whitelist {
 	
 	public Whitelist() {
 		whitelistedUrls = new HashMap<String,Integer>();
-		dir = "/home/tlhop/aplicacao_urls/urls/whitelist/";
+		dir = "/home/vrjuliao/workfolder/web-phishing-framework/data/whitelist/";
 		getWhitelistedUrls();
 	}
 	

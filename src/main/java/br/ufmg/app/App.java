@@ -1,4 +1,4 @@
-package br.arcabouço.app;
+package br.ufmg.app;
 
 import java.nio.charset.Charset;
 import java.nio.file.*;
@@ -29,7 +29,7 @@ import org.openqa.selenium.Proxy;
 
 import com.google.common.net.HttpHeaders;
 
-import br.arcabouço.utils.*;
+import br.ufmg.utils.*;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -65,7 +65,7 @@ public class App {
 	/* Inicialização de variáveis.*/
 	public App(int instancias,int timeout,String flag,int limite_requisicoes) {
 		this.whitelist = new Whitelist();
-		this.blacklist = new Whitelist("/home/tlhop/aplicacao_urls/urls/blacklist/");
+		this.blacklist = new Whitelist("/home/vrjuliao/workfolder/web-phishing-framework/data/blacklist/");
 		this.instancias = instancias;
 		this.timeout = timeout;
 		this.flag = flag;
@@ -78,6 +78,8 @@ public class App {
 			this.fdir = "/home/tlhop/aplicacao_urls/urls/finallogs/";
 			this.dirnome = "/home/tlhop/aplicacao_urls/urls/repo";
 		}
+		this.fdir = "/home/vrjuliao/workfolder/web-phishing-framework/data/finallogs/";
+		this.dirnome = "/home/vrjuliao/workfolder/web-phishing-framework/data/repo";
 		listaUrls = new LinkedBlockingDeque<String>();
 		reiniciarProcessos =  new AtomicBoolean();
 		reiniciarProcessos.set(false);
@@ -125,9 +127,9 @@ public class App {
 				e.printStackTrace();
 			}
 			
-			if (!this.flag.contentEquals("teste")) {
-				arquivo.delete();
-			}
+			// if (!this.flag.contentEquals("teste")) {
+			// 	arquivo.delete();
+			// }
 		}
 		/*for (int i = 0;i < this.instancias;i++) {
 			listaUrls.add("poison_pill");
@@ -143,7 +145,7 @@ public class App {
 		
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader("/home/tlhop/aplicacao_urls/urls/shellscripts/sys/operante"));
+			br = new BufferedReader(new FileReader("/home/vrjuliao/workfolder/web-phishing-framework/data/operante"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.exit(-1);

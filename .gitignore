@@ -1,1 +1,3 @@
 target/
+data/finallogs/*
+!data/finallogs/.file
