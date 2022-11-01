@@ -19,7 +19,8 @@ Java based open source application that uses selenium webdriver, headless firefo
 3. Build dependencies using maven on an IDE like Eclipse.
 4. Download Java.
 5. Run in command-line like the following:
-**java -jar 'name_of_project.jar' 'number_of_concurrent_browser_instances' 'page_timeout' acesso 'window_timeout' 'max_number_of_requests'**
+**java -jar 'name_of_project.jar' 'number_of_concurrent_browser_instances' 'page_timeout' acesso 'window_timeout' 'max_number_of_requests'**\
+Example: **java -jar App.jar 5 15 acesso 1800 60**
 
 ## Features
 
