@@ -1,7 +1,6 @@
 {
     "concurrentBrowsers": 5,
     "pageTimeout": 15,
-    "flag": "acesso",
     "windowTimeout": 1800,
     "maxRequests": 60
 }

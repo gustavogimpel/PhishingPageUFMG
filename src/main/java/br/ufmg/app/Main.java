@@ -12,10 +12,6 @@ import org.json.JSONTokener;
 import org.json.JSONException;
 
 
-/* Parâmetros:
- * instancias -> numero de processos que acessam urls ao mesmo tempo.
- * timeout -> tempo até que a conexão com uma página expire.
- * flag -> identifica se é uma conexão de teste ou não.*/
 public class Main {
 	public static void main(String[] args) {
 
@@ -34,8 +30,6 @@ public class Main {
 
 		int concurrentBrowserInstancesNumber = 0;
 		int pageTimeout = 0;
-		// TODO: Assign a better name for the key "flag"
-		String flag = "";
 		int windowTimeout = 0;
 		int maxRequestNumber = 0;
 
@@ -47,7 +41,6 @@ public class Main {
 			System.out.println(configObject);
 			concurrentBrowserInstancesNumber = configObject.getInt("concurrentBrowsers");
 			pageTimeout = configObject.getInt("pageTimeout");
-			flag = configObject.getString("flag"); // "acesso"
 			windowTimeout = configObject.getInt("windowTimeout");
 			maxRequestNumber = configObject.getInt("maxRequests");
 			
@@ -66,7 +59,6 @@ public class Main {
 		
 		App aplicacao = new App(concurrentBrowserInstancesNumber,
 								pageTimeout,
-								flag,
 								maxRequestNumber);
 
 		System.out.println("HERE");

@@ -50,11 +50,10 @@ To understant the configuration environment, go to
 
 ### Configuration file
 It is a JSON file containing an object with five parameters:
-* concurrentBrowsers: Number of concurrent browser instances.
-* pageTimeout: Page timeout.
-* windowTimeout: Time window for request limiting.
-* maxRequests: Request limit per defined time window.
-* flag: IDK
+* `concurrentBrowsers`: Number of concurrent browser instances.
+* `pageTimeout`: Page timeout.
+* `windowTimeout`: Time window for request limiting.
+* `maxRequests`: Request limit per defined time window.
 
 See the exemple configuration file at [config.json](example/config.json).
 

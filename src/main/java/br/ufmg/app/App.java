@@ -37,7 +37,6 @@ public class App {
 	
 	private int instancias;
 	private int timeout;
-	private String flag;
 	private int limite_requisicoes;
 	private String fdir;
 	private String dirnome;
@@ -53,7 +52,6 @@ public class App {
 		
 		this.instancias = 10;
 		this.timeout = 15;
-		this.flag = "normal";
 		this.dirnome = "/home/heitor/mypython/precompiled_packets/urls/repo";
 		listaUrls = new LinkedBlockingDeque<String>();
 		reiniciarProcessos =  new AtomicBoolean();
@@ -63,21 +61,12 @@ public class App {
 	}
 	
 	/* Inicialização de variáveis.*/
-	public App(int instancias,int timeout,String flag,int limite_requisicoes) {
+	public App(int instancias, int timeout, int limite_requisicoes) {
 		this.whitelist = new Whitelist();
 		this.blacklist = new Whitelist("/home/vrjuliao/workfolder/web-phishing-framework/data/blacklist/");
 		this.instancias = instancias;
 		this.timeout = timeout;
-		this.flag = flag;
 		this.limite_requisicoes = limite_requisicoes;
-		
-		if("teste".equals(this.flag)) {
-			this.fdir = "/home/tlhop/aplicacao_urls/urls/teste/finallogs_teste/";
-			this.dirnome = "/home/tlhop/aplicacao_urls/urls/teste/repo_teste";
-		}else {
-			this.fdir = "/home/tlhop/aplicacao_urls/urls/finallogs/";
-			this.dirnome = "/home/tlhop/aplicacao_urls/urls/repo";
-		}
 		this.fdir = "/home/vrjuliao/workfolder/web-phishing-framework/data/finallogs/";
 		this.dirnome = "/home/vrjuliao/workfolder/web-phishing-framework/data/repo";
 		listaUrls = new LinkedBlockingDeque<String>();
@@ -126,10 +115,6 @@ public class App {
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
-			
-			// if (!this.flag.contentEquals("teste")) {
-			// 	arquivo.delete();
-			// }
 		}
 		/*for (int i = 0;i < this.instancias;i++) {
 			listaUrls.add("poison_pill");
@@ -243,9 +228,7 @@ public class App {
 		}
 		
 		monitor.interrupt();
-		if (!this.flag.contentEquals("teste")) {
-			escreverUrlsRestantes();
-		}
+		escreverUrlsRestantes();
 		System.out.println("aaaa");
 		System.gc();
 		
