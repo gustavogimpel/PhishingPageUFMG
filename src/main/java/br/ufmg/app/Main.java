@@ -32,12 +32,12 @@ public class Main {
 		System.out.println("configFilePath: " + configFilePath.toString());
 
 
-		int concurrentBrowserInstancesNumber;
-		int pageTimeout;
+		int concurrentBrowserInstancesNumber = 0;
+		int pageTimeout = 0;
 		// TODO: Assign a better name for the key "flag"
-		String flag;
-		int windowTimeout;
-		int maxRequestNumber;
+		String flag = "";
+		int windowTimeout = 0;
+		int maxRequestNumber = 0;
 
 		// Start reading configuration file
 		try (FileReader reader = new FileReader(configFilePath.toString()))
@@ -51,13 +51,15 @@ public class Main {
 			windowTimeout = configObject.getInt("windowTimeout");
 			maxRequestNumber = configObject.getInt("maxRequests");
 			
-			System.exit(0);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		} catch (JSONException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		}
 
 		Singleton.getInstance().setParameters(windowTimeout, maxRequestNumber);
@@ -67,6 +69,7 @@ public class Main {
 								flag,
 								maxRequestNumber);
 
+		System.out.println("HERE");
 		aplicacao.configurarCaminhos();
 		aplicacao.obterArquivos();
 		aplicacao.obterUrls();
