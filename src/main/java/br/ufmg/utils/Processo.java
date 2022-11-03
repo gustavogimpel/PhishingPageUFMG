@@ -71,10 +71,10 @@ public class Processo implements Runnable {
 	private EscritorArquivo fcadeia;
 	private EscritorArquivo firefoxexc;
 	private EscritorArquivo sourcePage;
-	private Whitelist whitelist;
-	private Whitelist blacklist;
+	private URLList whitelist;
+	private URLList blacklist;
 	
-	public Processo(BlockingQueue<String> listaUrls,AtomicBoolean terminarProcessos,AtomicBoolean reiniciarProcessos,int id,ConfigCaminhos pathdict, String diretorio, Whitelist whitelist,Whitelist blacklist,int timeout,int limite_requisicoes) {
+	public Processo(BlockingQueue<String> listaUrls,AtomicBoolean terminarProcessos,AtomicBoolean reiniciarProcessos,int id,ConfigCaminhos pathdict, String diretorio, URLList whitelist,URLList blacklist,int timeout,int limite_requisicoes) {
 		this.timeout = timeout;
 		this.whitelist = whitelist;
 		this.blacklist = blacklist;
@@ -105,7 +105,7 @@ public class Processo implements Runnable {
 				  int numRequisicoes = Singleton.getInstance().getNumeroReq(dom);
 				  //System.out.println(dom + " " + numRequisicoes);
 				  Singleton.getInstance().setNumeroReq(dom, tempo);
-				  if (numRequisicoes >= limite_requisicoes && !whitelist.isInWhitelist(dom)) {
+				  if (numRequisicoes >= limite_requisicoes && !whitelist.has(dom)) {
 					  final HttpResponse response = new DefaultHttpResponse(request.getProtocolVersion(),HttpResponseStatus.valueOf(405));
 					  response.headers().add(HttpHeaders.CONNECTION, "Close");
 					  return response;
@@ -115,7 +115,7 @@ public class Processo implements Runnable {
 			  }
 		  }
 	      
-          if (request.getMethod().equals(HttpMethod.POST) || dom.contains(".gov") || blacklist.isInWhitelist(dom)) {
+          if (request.getMethod().equals(HttpMethod.POST) || dom.contains(".gov") || blacklist.has(dom)) {
           	//System.out.println(request.headers());
           	final HttpResponse response = new DefaultHttpResponse(request.getProtocolVersion(),HttpResponseStatus.valueOf(405));
           	response.headers().add(HttpHeaders.CONNECTION, "Close");

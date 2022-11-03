@@ -3,31 +3,16 @@ package br.ufmg.app;
 import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
 import java.util.*;
-
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.HttpMethod;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import net.lightbody.bmp.client.ClientUtil;
 
 import java.util.concurrent.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import org.openqa.selenium.Proxy;
-
-import com.google.common.net.HttpHeaders;
 
 import br.ufmg.utils.*;
 
@@ -35,24 +20,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class App {
 	
-	private int instancias;
-	private int timeout;
-	private int limite_requisicoes;
-	private String fdir;
-	private String dirnome;
+	private Configuration config;
 	private ConfigCaminhos pathdict;
-	private Whitelist whitelist;
-	private Whitelist blacklist;
+	private URLList whitelist;
+	private URLList blacklist;
 	private File[] arquivos;
 	private BlockingQueue<String> listaUrls;
 	private AtomicBoolean reiniciarProcessos;
 	private AtomicBoolean terminarProcessos;
 	
 	public App() {
-		
-		this.instancias = 10;
-		this.timeout = 15;
-		this.dirnome = "/home/heitor/mypython/precompiled_packets/urls/repo";
 		listaUrls = new LinkedBlockingDeque<String>();
 		reiniciarProcessos =  new AtomicBoolean();
 		reiniciarProcessos.set(false);
@@ -61,14 +38,14 @@ public class App {
 	}
 	
 	/* Inicialização de variáveis.*/
-	public App(int instancias, int timeout, int limite_requisicoes) {
-		this.whitelist = new Whitelist();
-		this.blacklist = new Whitelist("/home/vrjuliao/workfolder/web-phishing-framework/data/blacklist/");
-		this.instancias = instancias;
-		this.timeout = timeout;
-		this.limite_requisicoes = limite_requisicoes;
-		this.fdir = "/home/vrjuliao/workfolder/web-phishing-framework/data/finallogs/";
-		this.dirnome = "/home/vrjuliao/workfolder/web-phishing-framework/data/repo";
+	public App(Configuration config) { //int instancias, int timeout, int limite_requisicoes, Path repository, Path whiteList, Path blackList, Path logsDir) {
+		try {
+			this.whitelist = new URLList(config.getWhiteListPath());
+			this.blacklist = new URLList(config.getBlackListPath());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.config = config;
 		listaUrls = new LinkedBlockingDeque<String>();
 		reiniciarProcessos =  new AtomicBoolean();
 		reiniciarProcessos.set(false);
@@ -83,7 +60,7 @@ public class App {
 	/* Função que realiza a leitura de arquivos. */
 	public void obterArquivos() {
 		
-		File repo = new File(dirnome);
+		File repo = this.config.getRepositoryPath().toFile();
 		if ( repo.isDirectory() ) {
 			arquivos = repo.listFiles();
 			Arrays.sort(arquivos, Comparator.comparingLong(File::lastModified));
@@ -160,7 +137,7 @@ public class App {
 		String dataFormatada = dataInicio.format(data);
 		String inicio = "Inicio em "+dataFormatada+"\n";
 		try {
-			Files.write(Paths.get(fdir+pathdict.getAtributo("inicio")), inicio.getBytes());
+			Files.write(Paths.get(this.config.getLogsDirPath().toString(), pathdict.getAtributo("inicio")), inicio.getBytes());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -203,14 +180,17 @@ public class App {
 				reiniciarProcessos.set(false);
 			}
 			listaThreads.removeIf(isDead);
-			if(listaThreads.size() >= instancias) {
+			if(listaThreads.size() >= this.config.getConcurrentBrowserInstancesNumber()) {
 				try {
 					TimeUnit.SECONDS.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}else {
-				Processo r = new Processo(listaUrls,terminarProcessos,reiniciarProcessos,indice, pathdict, fdir, whitelist,blacklist,timeout,limite_requisicoes);
+				Processo r = new Processo(listaUrls, terminarProcessos, reiniciarProcessos,
+							 indice, pathdict, this.config.getLogsDirPath().toString(),
+							  whitelist, blacklist, this.config.getPageTimeout(),
+							  this.config.getMaxRequestNumber());
 				Thread t = new Thread(r);
 				listaThreads.add(t);
 				t.start();
@@ -237,7 +217,7 @@ public class App {
 		String tempoString = Long.toString(tempoDecorrido) + '\n';
 		
 		try {
-			Files.write(Paths.get(fdir+pathdict.getAtributo("time")), tempoString.getBytes());
+			Files.write(Paths.get(this.config.getLogsDirPath().toString(), pathdict.getAtributo("time")), tempoString.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -247,7 +227,8 @@ public class App {
 	public void escreverUrlsRestantes() {
 		EscritorArquivo restantes = null;
 		try {
-			restantes = new EscritorArquivo(dirnome+"/urlsrestantes",true,false,"UTF-8");
+			restantes = new EscritorArquivo(Paths.get(this.config.getRepositoryPath().toString(),"urlsrestantes").toString(),
+													  true, false, "UTF-8");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
