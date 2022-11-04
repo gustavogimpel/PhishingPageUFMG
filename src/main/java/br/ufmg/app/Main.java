@@ -2,7 +2,6 @@ package br.ufmg.app;
 
 import br.ufmg.utils.Singleton;
 
-
 public class Main {
 	public static void main(String[] args) {
 
@@ -16,7 +15,7 @@ public class Main {
 
 		Configuration config = new Configuration(args[0]);
 		// TODO: Print the JSON configuration
-		
+
 		// System.out().setParameters(windowTimeout, maxRequestNumber);
 		Singleton.getInstance().setParameters(config.getWindowTimeout(), config.getMaxRequestNumber());
 
@@ -27,7 +26,7 @@ public class Main {
 		// 						blackList,
 		// 						whiteList,
 		// 						logsDir);
-		
+
 		App aplicacao = new App(config);
 		System.out.println("HERE");
 		aplicacao.configurarCaminhos();

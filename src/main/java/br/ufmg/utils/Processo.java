@@ -49,7 +49,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class Processo implements Runnable {
-	
+
 	private int porta;
 	private int pid;
 	private int timeout;
@@ -73,7 +73,7 @@ public class Processo implements Runnable {
 	private EscritorArquivo sourcePage;
 	private URLList whitelist;
 	private URLList blacklist;
-	
+
 	public Processo(BlockingQueue<String> listaUrls,AtomicBoolean terminarProcessos,AtomicBoolean reiniciarProcessos,int id,ConfigCaminhos pathdict, String diretorio, URLList whitelist,URLList blacklist,int timeout,int limite_requisicoes) {
 		this.timeout = timeout;
 		this.whitelist = whitelist;
@@ -87,18 +87,18 @@ public class Processo implements Runnable {
 		this.reiniciarProcessos = reiniciarProcessos;
 		this.limite_requisicoes = limite_requisicoes;
 	}
-	
+
 	public void getProxyServer() {
 	     proxy = new BrowserMobProxyServer();
-	     
+
 	     proxy.addRequestFilter((request, contents, messageInfo) -> {
-	    	 
+
 	      String urlReq = io.netty.handler.codec.http.HttpHeaders.getHost(request);
 		  String dom = "";
 		  dom = urlReq.split(":")[0];
-		  
+
 		  request.headers().set("X-Research-Project-Info","http://138.197.3.28/");
-		  
+
 		  if (!dom.contains("firefox") && !dom.contains("mozilla") && !dom.contains("proxy")) {
 			  long tempo = System.currentTimeMillis();
 			  if (Singleton.getInstance().isInDict(dom)) {
@@ -109,12 +109,12 @@ public class Processo implements Runnable {
 					  final HttpResponse response = new DefaultHttpResponse(request.getProtocolVersion(),HttpResponseStatus.valueOf(405));
 					  response.headers().add(HttpHeaders.CONNECTION, "Close");
 					  return response;
-				  }  
+				  }
 			  }else {
 				  Singleton.getInstance().setNumeroReq(urlReq, tempo);
 			  }
 		  }
-	      
+
           if (request.getMethod().equals(HttpMethod.POST) || dom.contains(".gov") || blacklist.has(dom)) {
           	//System.out.println(request.headers());
           	final HttpResponse response = new DefaultHttpResponse(request.getProtocolVersion(),HttpResponseStatus.valueOf(405));
@@ -124,7 +124,7 @@ public class Processo implements Runnable {
           	return null;
           }
 	     });
-	     
+
 	     // ---------------------------------------@---------------------------------
 	     proxy.addLastHttpFilterFactory(new HttpFiltersSourceAdapter() {
 	            @Override
@@ -141,11 +141,11 @@ public class Processo implements Runnable {
 	                };
 	            }
 	        });
-	     
-	     proxy.setTrustAllServers(true); 
+
+	     proxy.setTrustAllServers(true);
 	     proxy.start();
 	}
-	
+
 	public void getSeleniumProxy() {
 		  seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
 		  try {
@@ -156,17 +156,17 @@ public class Processo implements Runnable {
 		      e.printStackTrace();
 		  }
 	}
-	
+
 	public void getFirefoxDriver(DesiredCapabilities capabilities) {
 		FirefoxOptions options = new FirefoxOptions();
 		options.setProxy(seleniumProxy);
 		options.setHeadless(true);
 		options.merge(capabilities);
-		
+
 		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"null");
 		driver = new FirefoxDriver(options);
 	}
-	
+
 	public void abrirArquivos () {
 		try {
 			falog = new EscritorArquivo(fdir+pathdict.getAtributo("accessLog")+"_"+Integer.toString(pid),true,true,"UTF-8");
@@ -184,26 +184,26 @@ public class Processo implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public Resposta acessaUrl(String urlComposta) {
 		String[] temp = urlComposta.split("  ");
 		String url = temp[0];
 		//System.out.println(url);
-		
+
 		String dom = "";
 		if (url.contains("http") == true) {
 			dom = url.split("/")[2];
 		}else {
 			dom = url.split("/")[0];
 		}
-				
+
 		if ( dominiosBloqueados.get(dom) != null  && dominiosBloqueados.get(dom) >= 10) {
 			String out = urlComposta.replace("\n","")+"  BLOQUEADO  0\n";
 			Resposta resposta = new Resposta(true,false,out);
 			return resposta;
 		}
-		
+
         proxy.newHar("url_"+Integer.toString(pid));
         driver.manage().timeouts().pageLoadTimeout(this.timeout, TimeUnit.SECONDS);
         String finalUrl = "about:blank";
@@ -221,21 +221,21 @@ public class Processo implements Runnable {
             	 }
         	}
         	String urlBroken = urlComposta;
-                	
+
         	firefoxexc.escreveArquivo(urlBroken + e.toString());
         	String nomeExc = e.getClass().getSimpleName();
         	String out = urlComposta.replace("\n","")+"  "+nomeExc+"  0\n";
 			Resposta resposta = new Resposta(true,false,out);
 			return resposta;
         }
-		
+
         if (finalUrl != "about:blank") {
-        	
+
         	InetAddress ip = null;
         	String ipTexto = null;
         	try {
 				String hostname = new URL(finalUrl).getHost();
-				ip = InetAddress.getByName(hostname); 
+				ip = InetAddress.getByName(hostname);
 			 	ipTexto = ip.getHostAddress();
 			} catch (MalformedURLException e) {
 				//e.printStackTrace();
@@ -251,9 +251,9 @@ public class Processo implements Runnable {
             		dominiosBloqueados.replace(dom, valor);
             	}
 				finalUrl = "-";
-				ipTexto = "0";	
+				ipTexto = "0";
 			}
-        	
+
 			String out = urlComposta.replace("\n","")+"  "+finalUrl+"  "+ ipTexto +"\n";
 			// TODO: tem uma exceção sendo lançada abaixo: (consertada , talvez)
 			String hash;
@@ -262,37 +262,37 @@ public class Processo implements Runnable {
         		String html = driver.getPageSource();
         		Document document = Jsoup.parse(html);
             	page = document.toString();
-            	
+
             	hash = DigestUtils.md5Hex(page);
         	} catch (Exception e) {
         		page = "";
         		hash = "EMPTYPAGE";
         	}
-        	
+
 			String url8 = out.replace("\n","") + "  " + hash.toString() + "\n";
-        	
+
 			sourcePage.escreveArquivo(url8);
 			sourcePage.escreveArquivo(page);
 			sourcePage.escreveArquivo("\n*!-@x!x@-!*\n");
-        	
+
         	//System.out.println("finished");
         	return new Resposta(false,false,out,proxy.getHar().getLog().getEntries());
-        	
+
         }
         return new Resposta(true,false,"wtf");
 	}
-	
+
 	public void run() {
 		System.setProperty("webdriver.gecko.driver", "/home/vrjuliao/.local/bin/geckodriver");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		
+
 		getProxyServer();
 		getSeleniumProxy();
 		capabilities.setCapability("marionette", true);
 		getFirefoxDriver(capabilities);
-		
+
 		abrirArquivos();
-		
+
 		while (terminarProcessos.get() == false) {
 			try {
 				if (reiniciarProcessos.get()) {
@@ -305,14 +305,14 @@ public class Processo implements Runnable {
 					terminarProcessos.compareAndSet(false,true);
 					break;
 				}
-				
+
 				Resposta resposta = acessaUrl(urlComposta);
 				String urlLog = resposta.getUrlLog();
 				//System.out.println(urlLog);
 				falog.escreveArquivo(urlLog);
 	            ftcp.escreveArquivo(urlLog.replace("\n",""));
 	            fcadeia.escreveArquivo(urlLog);
-	            
+
 	            Set<String> conjuntoIps = new HashSet<String>();
 	            if(resposta.getExcecao() == false  && resposta.getBloqueado() != true) {
 	            	List<HarEntry> entries = resposta.getHar();
@@ -323,12 +323,12 @@ public class Processo implements Runnable {
 	            		conjuntoIps.add(ip);
 	            		String urlInicial = entry.getRequest().getUrl();
 	            		String urlFinal = entry.getResponse().getRedirectURL();
-	            		
+
 	            		if (!urlFinal.contains("mozilla") && !urlInicial.contains("mozilla")
 	            				&& !urlFinal.contains("firefox") && !urlInicial.contains("firefox")) {
 	            			if (urlFinal != "") {
 		            			String timeStamp = entry.getStartedDateTime().toString();
-		            			fcadeia.escreveArquivo(timeStamp.replace(" ","") + "  " + urlInicial + "  " + urlFinal + "  " + statusCode);	
+		            			fcadeia.escreveArquivo(timeStamp.replace(" ","") + "  " + urlInicial + "  " + urlFinal + "  " + statusCode);
 		            		}else {
 		            			if (urlInicial != "") {
 		            				String timeStamp = entry.getStartedDateTime().toString();
@@ -338,10 +338,10 @@ public class Processo implements Runnable {
 	            		}
 	            	}
 	            	String cadeiaIps = String.join(",", conjuntoIps);
-		            
+
 		            ftcp.escreveArquivo("  "+cadeiaIps);
 	            }
-	            
+
 	            ftcp.escreveArquivo("\n*!-@x!x@-!*\n");
 	            fcadeia.escreveArquivo("*!-@x!x@-!*\n");
 	            double tempoFinal = System.currentTimeMillis();
@@ -349,19 +349,19 @@ public class Processo implements Runnable {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 		}
-		
+
 		try {
 			driver.close();
 			proxy.stop();
 		}catch(Exception e) {
-			
+
 		}
-		
+
 		terminate();
 	}
-	
+
 	public void terminate() {
 		try {
 			System.out.println("Processo "+pid+" terminado.");

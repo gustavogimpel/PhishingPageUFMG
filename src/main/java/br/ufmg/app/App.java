@@ -19,7 +19,7 @@ import br.ufmg.utils.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class App {
-	
+
 	private Configuration config;
 	private ConfigCaminhos pathdict;
 	private URLList whitelist;
@@ -28,7 +28,7 @@ public class App {
 	private BlockingQueue<String> listaUrls;
 	private AtomicBoolean reiniciarProcessos;
 	private AtomicBoolean terminarProcessos;
-	
+
 	/* Inicialização de variáveis.*/
 	public App(Configuration config) { //int instancias, int timeout, int limite_requisicoes, Path repository, Path whiteList, Path blackList, Path logsDir) {
 		try {
@@ -44,14 +44,14 @@ public class App {
 		terminarProcessos =  new AtomicBoolean();
 		terminarProcessos.set(false);
 	}
-	
+
 	public void configurarCaminhos() {
 		pathdict = new ConfigCaminhos();
 	}
-	
+
 	/* Função que realiza a leitura de arquivos. */
 	public void obterArquivos() {
-		
+
 		File repo = this.config.getRepositoryPath().toFile();
 		if ( repo.isDirectory() ) {
 			arquivos = repo.listFiles();
@@ -67,9 +67,9 @@ public class App {
 		if (arquivos.length == 0) {
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	/* Função que realiza a leitura de URLs. */
 	public void obterUrls() {
 		Charset charset = Charset.forName("UTF-8");
@@ -90,13 +90,13 @@ public class App {
 		}*/
 		System.out.println(listaUrls.size());
 	}
-	
+
 	/* Função que determina se a aplicação deve parar, realizando
 	 * a leitura de um arquivo na pasta shellscripts/sys/operante. */
 	public int appOperante() {
 		int status = 0;
 		int tries = 0;
-		
+
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader("/home/vrjuliao/workfolder/web-phishing-framework/data/operante"));
@@ -119,12 +119,12 @@ public class App {
 		}
 		return status;
 	}
-	
+
 	/* Função principal. Administa o multithreading */
 	@SuppressWarnings("deprecation")
 	public void administrarProcessos() {
 		SimpleDateFormat dataInicio = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		
+
 		Date data = new Date();
 		String dataFormatada = dataInicio.format(data);
 		String inicio = "Inicio em "+dataFormatada+"\n";
@@ -133,24 +133,24 @@ public class App {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		MonitorMemoria memoryMonitor = new MonitorMemoria(reiniciarProcessos);
 		Thread monitor = new Thread(memoryMonitor);
 		monitor.start();
-		
+
 		List<Thread> listaThreads = new LinkedList<Thread>();
-		
+
 		Predicate<Thread> isDead = t -> !t.isAlive();
-		
-		long tempoInicio = System.nanoTime(); 
+
+		long tempoInicio = System.nanoTime();
 		int indice = 0;
-		
+
 		while(appOperante() == 1) {
-			
+
 			if(terminarProcessos.get()) {
 				break;
 			}
-			
+
 			if(reiniciarProcessos.get()) {
 				//terminarProcessos.set(true);
 				System.out.println("Esperando");
@@ -187,10 +187,10 @@ public class App {
 				listaThreads.add(t);
 				t.start();
 				System.out.println("Thread "+Integer.toString(indice)+" criada");
-				indice += 1;	
+				indice += 1;
 			}
 		}
-		
+
 		for (Thread thread : listaThreads ) {
 			try {
 				thread.join(600000);
@@ -198,16 +198,16 @@ public class App {
 				e.printStackTrace();
 			}
 		}
-		
+
 		monitor.interrupt();
 		escreverUrlsRestantes();
 		System.out.println("aaaa");
 		System.gc();
-		
+
 		long tempoFinal = System.nanoTime();
 		long tempoDecorrido = tempoFinal - tempoInicio;
 		String tempoString = Long.toString(tempoDecorrido) + '\n';
-		
+
 		try {
 			Files.write(Paths.get(this.config.getLogsDirPath().toString(), pathdict.getAtributo("time")), tempoString.getBytes());
 		} catch (IOException e) {
@@ -215,7 +215,7 @@ public class App {
 		}
 		System.exit(0);
 	}
-	
+
 	public void escreverUrlsRestantes() {
 		EscritorArquivo restantes = null;
 		try {
@@ -240,5 +240,5 @@ public class App {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

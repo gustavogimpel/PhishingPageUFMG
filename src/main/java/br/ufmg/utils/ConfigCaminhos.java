@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 
 public class ConfigCaminhos {
-	
+
 	private String httpLog;
 	private String httpException;
 	private String recip;
@@ -20,12 +20,12 @@ public class ConfigCaminhos {
 	private String cadeiaUrls;
 	private String inicio;
 	private String data;
-	
+
 	public ConfigCaminhos() {
 		String data = obterData();
 		this.data = data;
 		String hostname = obterHostName();
-		
+
 		httpLog = data+".http."+hostname;
 		httpException = data+".http_exception."+hostname;
 		recip = data+".recip."+hostname;
@@ -39,14 +39,14 @@ public class ConfigCaminhos {
 	    cadeiaUrls = data+".cadeia_urls."+hostname;
 	    inicio = data+".inicio."+hostname;
 	}
-	
+
 	public String obterData () {
 		SimpleDateFormat timestamp = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date data = new Date();
 		String dataFormatada = timestamp.format(data);
 		return dataFormatada;
 	}
-	
+
 	public String obterHostName() {
 		try {
 			InetAddress ip = InetAddress.getLocalHost();
@@ -56,14 +56,14 @@ public class ConfigCaminhos {
 			return "";
 		}
 	}
-	
+
 	public String getAtributo(String att) {
 		if ("httpLog".equals(att)) {
 			return httpLog;
 		}else if ("httpException".equals(att)) {
 			return httpException;
 		}else if ("recip".equals(att)) {
-			return recip; 
+			return recip;
 		}else if ("sourcePage".equals(att)) {
 			return sourcePage;
 		}else if ("firefoxException".equals(att)) {
@@ -86,5 +86,5 @@ public class ConfigCaminhos {
 			return "exception";
 		}
 	}
-	
+
 }

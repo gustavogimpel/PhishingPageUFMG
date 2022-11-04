@@ -31,7 +31,7 @@ public class Configuration {
 		try (FileReader reader = new FileReader(this.configFilePath.toString())) {
 			JSONTokener jsonTokener = new JSONTokener(reader);
 			JSONObject configObject = new JSONObject(jsonTokener);
-			
+
 			// Required parameters
 			this.readConcurrentBrowserInstancesNumber(configObject);
 			this.readPageTimeout(configObject);
@@ -152,5 +152,5 @@ public class Configuration {
     public Path getLogsDirPath() {
         return this.logsDirPath;
     }
-    
+
 }

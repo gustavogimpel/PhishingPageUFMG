@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MonitorMemoria implements Runnable {
-	
+
 	private AtomicBoolean reiniciarProcessos;
-	
+
 	public MonitorMemoria(AtomicBoolean rp) {
 		reiniciarProcessos = rp;
 	}
-	
+
 	public void run() {
 		int nReinicios = 0;
 		while(true) {
@@ -23,7 +23,7 @@ public class MonitorMemoria implements Runnable {
 			} catch (InterruptedException e1) {
 				return;
 			}
-			
+
 			Process p;
 			try {
 				p = Runtime.getRuntime().exec("free -t -m");
@@ -31,7 +31,7 @@ public class MonitorMemoria implements Runnable {
 				e.printStackTrace();
 				continue;
 			}
-			
+
 			try {
 				p.waitFor();
 			} catch (InterruptedException e) {
@@ -39,12 +39,12 @@ public class MonitorMemoria implements Runnable {
 				e.printStackTrace();
 				continue;
 			}
-			
+
 			BufferedReader buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			String line = "";
 			String output = "";
 			String tokens = "";
-			
+
 			try {
 				while ((line = buf.readLine()) != null) {
 					output += line + "\n";
@@ -74,7 +74,7 @@ public class MonitorMemoria implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			//System.out.println(mem_percent);		
+			//System.out.println(mem_percent);
 		}
 	}
 }

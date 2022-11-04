@@ -14,39 +14,39 @@ import java.util.function.Predicate;
 import org.apache.commons.lang3.tuple.Pair;
 
 
-public class Singleton{  
+public class Singleton{
 	static private Singleton _instance;
 	private Map<String,List<Long>> dicionarioRequisicoes;
 	private long tempoInicio;
 	private int janela_requisicoes;
 	private int limite_requisicoes;
-	// methods and attributes for Singleton pattern  
+	// methods and attributes for Singleton pattern
 	private Singleton() {initGlobals();}
-	
+
 	private void initGlobals() {
 		dicionarioRequisicoes = new HashMap<String,List<Long>>();
 		tempoInicio = System.currentTimeMillis();
 	}
-	
-	public static Singleton getInstance() {  
-		if (_instance == null) {    
-			synchronized(Singleton.class) {      
-				if (_instance == null)_instance = new Singleton();    
-			}  
-		}  
+
+	public static Singleton getInstance() {
+		if (_instance == null) {
+			synchronized(Singleton.class) {
+				if (_instance == null)_instance = new Singleton();
+			}
+		}
 		return _instance;
 	}
-	
+
 	// metodos e atributos globais
 	synchronized public void setParameters(int janela_requisicoes,int limite_requisicoes) {
 		this.janela_requisicoes = janela_requisicoes;
 		this.limite_requisicoes = limite_requisicoes;
 	}
-	
+
 	synchronized public boolean isInDict(String dominio) {
 		return dicionarioRequisicoes.containsKey(dominio);
 	}
-	
+
 	synchronized public int getNumeroReq(String dominio) {
 		if(((System.currentTimeMillis() - tempoInicio))/1000 > janela_requisicoes) {
 			printHighestScores();
@@ -55,7 +55,7 @@ public class Singleton{
 		dicionarioRequisicoes.get(dominio).removeIf(timePassed);
 		return dicionarioRequisicoes.get(dominio).size();
 	}
-	
+
 	synchronized public void setNumeroReq(String dominio,long valor) {
 		if (isInDict(dominio)) {
 			dicionarioRequisicoes.get(dominio).add(valor);
@@ -65,7 +65,7 @@ public class Singleton{
 			dicionarioRequisicoes.put(dominio, novaLista);
 		}
 	}
-	
+
 	synchronized public void printHighestScores() {
 		List<Par> listaDomReq = new ArrayList<Par>();
 		for(Map.Entry<String,List<Long>> entry : dicionarioRequisicoes.entrySet()) {

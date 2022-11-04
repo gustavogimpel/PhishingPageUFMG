@@ -16,7 +16,7 @@ public class URLList {
 	private Charset charset = Charset.forName("UTF-8");
 	private Path urlListFilePath;
 	private HashSet<String> urlsSet;
-	
+
 	public URLList(Path urlListFilePath) throws IOException {
 		urlsSet = new HashSet<String>();
 		this.urlListFilePath = urlListFilePath;
@@ -24,7 +24,7 @@ public class URLList {
 			readURLsFromFile();
 		}
 	}
-	
+
 	private void addURLsFromFile(Path urlFilePath) throws IOException {
 		BufferedReader fileData = Files.newBufferedReader(urlFilePath, charset);
 		for(String line = fileData.readLine(); line != null; line = fileData.readLine()) {
@@ -49,9 +49,9 @@ public class URLList {
 			// throw ... // File "Path.toString() does not exists"
 		}
 	}
-	
+
 	synchronized public boolean has(String url) {
 		return this.urlsSet.contains(url);
 	}
-	
+
 }
