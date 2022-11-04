@@ -50,10 +50,34 @@ To understant the configuration environment, go to
 
 ### Configuration file
 It is a JSON file containing an object with five parameters:
-* `concurrentBrowsers`: Number of concurrent browser instances.
-* `pageTimeout`: Page timeout.
-* `windowTimeout`: Time window for request limiting.
-* `maxRequests`: Request limit per defined time window.
+
+* `concurrentBrowsers`: \[REQUIRED\] Number of concurrent browser instances.
+* `pageTimeout`: \[REQUIRED\] Page timeout.
+* `windowTimeout`: \[REQUIRED\] Time window for request limiting.
+* `maxRequests`: \[REQUIRED\] Request limit per defined time window.
+* `repositoryPath`: \[REQUIRED\] The path of the file or folder containing the
+  list of urls to be monitored.
+  If it is a file, the urls must be separated by a line breaker.
+  Otherwise, if it is a directory, all the files into that must have only urls
+  separated by linebreakers.
+* `geckodriverBinPath`: \[REQUIRED\] The path of the Geckodriver binary file.
+* `logsDirPath`:  The directory where all the output logs of this application will
+  be writen.
+  **WARNING**: This is not a required configuration, but if it is not provided,
+  the current work directory is chosen as the logs destination.
+* `whiteListPath`: The path of the file or folder containing the list of urls
+  of the white list. <!--TODO: improve the explanation about the white list -->
+  If it is a file, the urls must be separated by a line breaker.
+  Otherwise, if it is a directory, all the files into that must have only urls
+  separated by linebreakers.
+* `blackListPath`: The path of the file or folder containing the list of urls
+  of the black list. <!--TODO: improve the explanation about the white list -->
+  If it is a file, the urls must be separated by a line breaker.
+  Otherwise, if it is a directory, all the files into that must have only urls
+  separated by linebreakers.
+
+> All the configurations with the suffix `Path` can be specified by absolute
+paths or relative paths from the same directory of the configuration file.
 
 See the exemple configuration file at [config.json](example/config.json).
 

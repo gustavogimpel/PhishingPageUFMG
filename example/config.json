@@ -3,7 +3,7 @@
     "pageTimeout": 15,
     "windowTimeout": 1800,
     "maxRequests": 60,
-    "logsDirPath":"/home/vrjuliao/workfolder/web-phishing-framework/data/finallogs",
-    "repositoryPath": "../data/repo",
-    "geckodriverBinPath": "/home/vrjuliao/.local/bin/geckodriver"
+    "logsDirPath":"./finallogs",
+    "repositoryPath": "./repo",
+    "geckodriverBinPath": "/usr/bin/geckodriver"
 }

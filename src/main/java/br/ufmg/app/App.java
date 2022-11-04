@@ -29,14 +29,6 @@ public class App {
 	private AtomicBoolean reiniciarProcessos;
 	private AtomicBoolean terminarProcessos;
 	
-	public App() {
-		listaUrls = new LinkedBlockingDeque<String>();
-		reiniciarProcessos =  new AtomicBoolean();
-		reiniciarProcessos.set(false);
-		terminarProcessos =  new AtomicBoolean();
-		terminarProcessos.set(false);
-	}
-	
 	/* Inicialização de variáveis.*/
 	public App(Configuration config) { //int instancias, int timeout, int limite_requisicoes, Path repository, Path whiteList, Path blackList, Path logsDir) {
 		try {
@@ -97,7 +89,7 @@ public class App {
 			listaUrls.add("poison_pill");
 		}*/
 		System.out.println(listaUrls.size());
-	}	
+	}
 	
 	/* Função que determina se a aplicação deve parar, realizando
 	 * a leitura de um arquivo na pasta shellscripts/sys/operante. */
@@ -188,7 +180,7 @@ public class App {
 				}
 			}else {
 				Processo r = new Processo(listaUrls, terminarProcessos, reiniciarProcessos,
-							 indice, pathdict, this.config.getLogsDirPath().toString(),
+							 indice, pathdict, this.config.getLogsDirPath().toString()+"/",
 							  whitelist, blacklist, this.config.getPageTimeout(),
 							  this.config.getMaxRequestNumber());
 				Thread t = new Thread(r);

@@ -15,19 +15,9 @@ public class Main {
 		}
 
 		Configuration config = new Configuration(args[0]);
-		// System.exit(0);
+		// TODO: Print the JSON configuration
 		
-		// // TODO: Print the JSON configuration
-		// System.out.println("URLs repository: " + repository.toString());
-		// if (whiteList != null) {
-		// 	System.out.println(": "+logsDir.toString());
-		// }
-		// if (blackList != null) {
-		// 	System.out.println("Logs: "+logsDir.toString());
-		// }
-		// System.out.println("Logs are placed at: " + logsDir.toString());
-
-		// Singleton.getInstance().setParameters(windowTimeout, maxRequestNumber);
+		// System.out().setParameters(windowTimeout, maxRequestNumber);
 		Singleton.getInstance().setParameters(config.getWindowTimeout(), config.getMaxRequestNumber());
 
 		// App aplicacao = new App(concurrentBrowserInstancesNumber,
