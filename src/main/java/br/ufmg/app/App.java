@@ -67,7 +67,6 @@ public class App {
 		if (arquivos.length == 0) {
 			System.exit(0);
 		}
-
 	}
 
 	/* Função que realiza a leitura de URLs. */
