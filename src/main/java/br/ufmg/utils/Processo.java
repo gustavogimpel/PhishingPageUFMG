@@ -62,25 +62,17 @@ public class Processo implements Runnable {
 	private AtomicBoolean terminarProcessos;
 	private AtomicBoolean reiniciarProcessos;
 	private Map<String,Integer> dominiosBloqueados;
-	private ConfigCaminhos pathdict;
-	private EscritorArquivo falog;
-	private EscritorArquivo ftcp;
-	private EscritorArquivo ftime;
-	private EscritorArquivo httplog;
-	private EscritorArquivo httpexc;
-	private EscritorArquivo fcadeia;
-	private EscritorArquivo firefoxexc;
-	private EscritorArquivo sourcePage;
+	private LogsWriter logsWriter;
 	private URLList whitelist;
 	private URLList blacklist;
 
-	public Processo(BlockingQueue<String> listaUrls,AtomicBoolean terminarProcessos,AtomicBoolean reiniciarProcessos,int id,ConfigCaminhos pathdict, String diretorio, URLList whitelist,URLList blacklist,int timeout,int limite_requisicoes) {
+	public Processo(BlockingQueue<String> listaUrls,AtomicBoolean terminarProcessos,AtomicBoolean reiniciarProcessos,int id, LogsWriter logsWriter, String diretorio, URLList whitelist,URLList blacklist,int timeout,int limite_requisicoes) {
 		this.timeout = timeout;
 		this.whitelist = whitelist;
 		this.blacklist = blacklist;
 		this.listaUrls = listaUrls;
 		pid = id;
-		this.pathdict = pathdict;
+		this.logsWriter = logsWriter;
 		fdir = diretorio;
 		dominiosBloqueados = new HashMap<String,Integer>();
 		this.terminarProcessos = terminarProcessos;
@@ -167,24 +159,6 @@ public class Processo implements Runnable {
 		driver = new FirefoxDriver(options);
 	}
 
-	public void abrirArquivos () {
-		try {
-			falog = new EscritorArquivo(fdir+pathdict.getAtributo("accessLog")+"_"+Integer.toString(pid),true,true,"UTF-8");
-			ftcp = new EscritorArquivo(fdir+pathdict.getAtributo("tcp")+"_"+Integer.toString(pid),true,false,"UTF-8");
-			ftime = new EscritorArquivo(fdir+pathdict.getAtributo("timeUrls")+"_"+Integer.toString(pid),true,false,"UTF-8");
-			httplog = new EscritorArquivo(fdir+pathdict.getAtributo("http")+"_"+Integer.toString(pid),true,false,"UTF-8");
-			httpexc = new EscritorArquivo(fdir+pathdict.getAtributo("httpExc")+"_"+Integer.toString(pid),true,false,"UTF-8");
-			fcadeia = new EscritorArquivo(fdir+pathdict.getAtributo("cadeiaUrls")+"_"+Integer.toString(pid),true,false,"UTF-8");
-			firefoxexc = new EscritorArquivo(fdir+pathdict.getAtributo("firefoxException")+"_"+Integer.toString(pid),true,false,"UTF-8");
-			sourcePage = new EscritorArquivo(fdir+pathdict.getAtributo("sourcePage")+"_"+Integer.toString(pid),true,false,"UTF-8");
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@SuppressWarnings("deprecation")
 	public Resposta acessaUrl(String urlComposta) {
 		String[] temp = urlComposta.split("  ");
@@ -222,7 +196,13 @@ public class Processo implements Runnable {
         	}
         	String urlBroken = urlComposta;
 
-        	firefoxexc.escreveArquivo(urlBroken + e.toString());
+        	try {
+				logsWriter.writeFirefoxException(this.pid, urlBroken + e.toString());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
         	String nomeExc = e.getClass().getSimpleName();
         	String out = urlComposta.replace("\n","")+"  "+nomeExc+"  0\n";
 			Resposta resposta = new Resposta(true,false,out);
@@ -271,9 +251,14 @@ public class Processo implements Runnable {
 
 			String url8 = out.replace("\n","") + "  " + hash.toString() + "\n";
 
-			sourcePage.escreveArquivo(url8);
-			sourcePage.escreveArquivo(page);
-			sourcePage.escreveArquivo("\n*!-@x!x@-!*\n");
+			try {
+				this.logsWriter.writeSourcePage(this.pid, url8);
+				this.logsWriter.writeSourcePage(this.pid, page);
+				this.logsWriter.writeSourcePage(this.pid, "\n*!-@x!x@-!*\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
         	//System.out.println("finished");
         	return new Resposta(false,false,out,proxy.getHar().getLog().getEntries());
@@ -291,7 +276,7 @@ public class Processo implements Runnable {
 		capabilities.setCapability("marionette", true);
 		getFirefoxDriver(capabilities);
 
-		abrirArquivos();
+		// abrirArquivos();
 
 		while (terminarProcessos.get() == false) {
 			try {
@@ -309,9 +294,9 @@ public class Processo implements Runnable {
 				Resposta resposta = acessaUrl(urlComposta);
 				String urlLog = resposta.getUrlLog();
 				//System.out.println(urlLog);
-				falog.escreveArquivo(urlLog);
-	            ftcp.escreveArquivo(urlLog.replace("\n",""));
-	            fcadeia.escreveArquivo(urlLog);
+				this.logsWriter.writeAccessLog(this.pid, urlLog);
+				this.logsWriter.writeTcp(this.pid, urlLog.replace("\n",""));
+				this.logsWriter.writeCadeiaURLs(this.pid, urlLog);
 
 	            Set<String> conjuntoIps = new HashSet<String>();
 	            if(resposta.getExcecao() == false  && resposta.getBloqueado() != true) {
@@ -328,26 +313,29 @@ public class Processo implements Runnable {
 	            				&& !urlFinal.contains("firefox") && !urlInicial.contains("firefox")) {
 	            			if (urlFinal != "") {
 		            			String timeStamp = entry.getStartedDateTime().toString();
-		            			fcadeia.escreveArquivo(timeStamp.replace(" ","") + "  " + urlInicial + "  " + urlFinal + "  " + statusCode);
+								this.logsWriter.writeCadeiaURLs(this.pid, timeStamp.replace(" ","") + "  " + urlInicial + "  " + urlFinal + "  " + statusCode);
 		            		}else {
 		            			if (urlInicial != "") {
 		            				String timeStamp = entry.getStartedDateTime().toString();
-		            				fcadeia.escreveArquivo(timeStamp.replace(" ","") + "  " + urlInicial + "  -"+statusCode+"\n");
+									this.logsWriter.writeCadeiaURLs(this.pid, timeStamp.replace(" ","") + "  " + urlInicial + "  -"+statusCode+"\n");
 		            			}
 		            		}
 	            		}
 	            	}
 	            	String cadeiaIps = String.join(",", conjuntoIps);
 
-		            ftcp.escreveArquivo("  "+cadeiaIps);
+					this.logsWriter.writeTcp(this.pid, "  "+cadeiaIps);
 	            }
 
-	            ftcp.escreveArquivo("\n*!-@x!x@-!*\n");
-	            fcadeia.escreveArquivo("*!-@x!x@-!*\n");
-	            double tempoFinal = System.currentTimeMillis();
-	            ftime.escreveArquivo(Double.toString((tempoFinal-tempoInicio)/1000.0)+"\n");
+				this.logsWriter.writeTcp(this.pid, "\n*!-@x!x@-!*\n");
+				this.logsWriter.writeCadeiaURLs(this.pid, "*!-@x!x@-!*\n");
+				double tempoFinal = System.currentTimeMillis();
+				this.logsWriter.writeTimeURLs(this.pid, Double.toString((tempoFinal-tempoInicio)/1000.0)+"\n");
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -365,14 +353,7 @@ public class Processo implements Runnable {
 	public void terminate() {
 		try {
 			System.out.println("Processo "+pid+" terminado.");
-			ftime.close();
-	        httplog.close();
-	        httpexc.close();
-	        falog.close();
-	        ftcp.close();
-	        fcadeia.close();
-	        firefoxexc.close();
-	        sourcePage.close();
+			logsWriter.closeFiles();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

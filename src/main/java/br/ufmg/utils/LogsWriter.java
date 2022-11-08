@@ -1,4 +1,4 @@
-package br.ufmg.app;
+package br.ufmg.utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class LogsWriter {
     private final ArrayList<String> fileNameSuffixes =
         new ArrayList<String>(Arrays.asList(
             "access_log", "cadeia_urls", "firefox_exception",
-            "http", "http_exception", "recip", "source_page",
+            "http", "http_exception", "source_page",
             "tcp", "time_urls"
         ));
 
@@ -43,9 +43,6 @@ public class LogsWriter {
     private ArrayList<Path> httpExceptionFilePaths;
     private ArrayList<FileWriter> httpExceptionFileWriter;
 
-    private ArrayList<Path> recipFilePaths;
-    private ArrayList<FileWriter> recipFileWriter;
-
     private ArrayList<Path> sourcePageFilePaths;
     private ArrayList<FileWriter> sourcePageFileWriter;
 
@@ -58,11 +55,14 @@ public class LogsWriter {
     public LogsWriter(Path logsDirPath, int numberOfThreads) {
         this.logDirPath = logsDirPath;
         this.numberOfThreads = numberOfThreads;
+        this.currentDate = new Date();
         this.startFilenamePrefix();
         this.startFilenameSuffix();
         this.startLogFilePathsForMultipleFiles();
+    }
 
-        this.currentDate = new Date();
+    public String getFormatedDate() {
+        return this.currentDateForFilenamePrefix;
     }
 
     private void startFilenamePrefix() {
@@ -84,9 +84,9 @@ public class LogsWriter {
     }
 
     private ArrayList<Path> generateListOfPaths(String fileNameSuffix) {
-        ArrayList<Path> result = new ArrayList<Path>(this.numberOfThreads);
+        ArrayList<Path> result = new ArrayList<Path>();
         for(int i=0; i<this.numberOfThreads; i++) {
-            result.set(i,
+            result.add(
                 this.logDirPath
                     .resolve(this.getStandardFileNameFromSuffix(fileNameSuffix)+
                             "_"+Integer.toString(i))
@@ -101,20 +101,18 @@ public class LogsWriter {
         this.firefoxExceptionFilePaths  = generateListOfPaths(this.fileNameSuffixes.get(2));
         this.httpFilePaths              = generateListOfPaths(this.fileNameSuffixes.get(3));
         this.httpExceptionFilePaths     = generateListOfPaths(this.fileNameSuffixes.get(4));
-        this.recipFilePaths             = generateListOfPaths(this.fileNameSuffixes.get(5));
-        this.sourcePageFilePaths        = generateListOfPaths(this.fileNameSuffixes.get(6));
-        this.tcpFilePaths               = generateListOfPaths(this.fileNameSuffixes.get(7));
-        this.timeURLsFilePaths          = generateListOfPaths(this.fileNameSuffixes.get(8));
+        this.sourcePageFilePaths        = generateListOfPaths(this.fileNameSuffixes.get(5));
+        this.tcpFilePaths               = generateListOfPaths(this.fileNameSuffixes.get(6));
+        this.timeURLsFilePaths          = generateListOfPaths(this.fileNameSuffixes.get(7));
     }
 
     private ArrayList<FileWriter> createListOfFileWriters(ArrayList<Path> listOfPaths, boolean autoFlush)
         throws FileNotFoundException, UnsupportedEncodingException {
-        ArrayList<FileWriter> result = new ArrayList<FileWriter>(this.numberOfThreads);
+        ArrayList<FileWriter> result = new ArrayList<FileWriter>();
         for(int i=0; i<this.numberOfThreads; i++) {
-            result.set(i, new FileWriter(listOfPaths.get(i), autoFlush));
+            result.add(new FileWriter(listOfPaths.get(i), autoFlush));
         }
         return result;
-
     }
 
     public void createFiles() throws FileNotFoundException, UnsupportedEncodingException, IOException {
@@ -133,7 +131,6 @@ public class LogsWriter {
         this.firefoxExceptionFileWriter  = this.createListOfFileWriters(this.firefoxExceptionFilePaths, false);
         this.httpFileWriter              = this.createListOfFileWriters(this.httpFilePaths, false);
         this.httpExceptionFileWriter     = this.createListOfFileWriters(this.httpExceptionFilePaths, false);
-        this.recipFileWriter             = this.createListOfFileWriters(this.recipFilePaths, false);
         this.sourcePageFileWriter        = this.createListOfFileWriters(this.sourcePageFilePaths, false);
         this.tcpFileWriter               = this.createListOfFileWriters(this.tcpFilePaths, false);
         this.timeURLsFileWriter          = this.createListOfFileWriters(this.timeURLsFilePaths, false);
@@ -151,7 +148,6 @@ public class LogsWriter {
         this.closeListOfFiles(this.firefoxExceptionFileWriter);
         this.closeListOfFiles(this.httpFileWriter);
         this.closeListOfFiles(this.httpExceptionFileWriter);
-        this.closeListOfFiles(this.recipFileWriter);
         this.closeListOfFiles(this.sourcePageFileWriter);
         this.closeListOfFiles(this.tcpFileWriter);
         this.closeListOfFiles(this.timeURLsFileWriter);
@@ -191,13 +187,6 @@ public class LogsWriter {
             throw new IOException("Thread ID " +Integer.toString(threadIndex)+ " does not exist, so the file also doesn't");
         }
         this.httpExceptionFileWriter.get(threadIndex).write(text);
-    }
-
-    public void writeRecip(int threadIndex, String text) throws IOException {
-        if(threadIndex >= this.numberOfThreads) {
-            throw new IOException("Thread ID " +Integer.toString(threadIndex)+ " does not exist, so the file also doesn't");
-        }
-        this.recipFileWriter.get(threadIndex).write(text);
     }
 
     public void writeSourcePage(int threadIndex, String text) throws IOException {

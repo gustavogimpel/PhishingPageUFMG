@@ -21,9 +21,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class App {
 
 	private Configuration config;
-	private ConfigCaminhos pathdict;
-	private URLList whitelist;
-	private URLList blacklist;
+	private LogsWriter logsWriter;
+	private URLList whiteList;
+	private URLList blackList;
 	private File[] arquivos;
 	private BlockingQueue<String> listaUrls;
 	private AtomicBoolean reiniciarProcessos;
@@ -32,8 +32,8 @@ public class App {
 	/* Inicialização de variáveis.*/
 	public App(Configuration config) { //int instancias, int timeout, int limite_requisicoes, Path repository, Path whiteList, Path blackList, Path logsDir) {
 		try {
-			this.whitelist = new URLList(config.getWhiteListPath());
-			this.blacklist = new URLList(config.getBlackListPath());
+			this.whiteList = new URLList(config.getWhiteListPath());
+			this.blackList = new URLList(config.getBlackListPath());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,8 +45,9 @@ public class App {
 		terminarProcessos.set(false);
 	}
 
-	public void configurarCaminhos() {
-		pathdict = new ConfigCaminhos();
+	public void startLogFiles() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+		this.logsWriter = new LogsWriter(config.getLogsDirPath(), config.getConcurrentBrowserInstancesNumber());
+		this.logsWriter.createFiles();
 	}
 
 	/* Função que realiza a leitura de arquivos. */
@@ -56,10 +57,10 @@ public class App {
 		if ( repo.isDirectory() ) {
 			arquivos = repo.listFiles();
 			Arrays.sort(arquivos, Comparator.comparingLong(File::lastModified));
-		}else {
+		} else {
 			try {
-				String data = "Recipiente de urls inexistente: "+ pathdict.getAtributo("data");
-				Files.write(Paths.get(pathdict.getAtributo("recip")), data.getBytes());
+				String data = "Recipiente de urls inexistente: "+ this.logsWriter.getFormatedDate();
+				Files.write(Paths.get(this.logsWriter.getStandardFileNameFromSuffix("recip")), data.getBytes());
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -128,7 +129,7 @@ public class App {
 		String dataFormatada = dataInicio.format(data);
 		String inicio = "Inicio em "+dataFormatada+"\n";
 		try {
-			Files.write(Paths.get(this.config.getLogsDirPath().toString(), pathdict.getAtributo("inicio")), inicio.getBytes());
+			Files.write(Paths.get(this.config.getLogsDirPath().toString(), this.logsWriter.getStandardFileNameFromSuffix("inicio")), inicio.getBytes());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -179,8 +180,8 @@ public class App {
 				}
 			}else {
 				Processo r = new Processo(listaUrls, terminarProcessos, reiniciarProcessos,
-							 indice, pathdict, this.config.getLogsDirPath().toString()+"/",
-							  whitelist, blacklist, this.config.getPageTimeout(),
+							 indice, this.logsWriter, this.config.getLogsDirPath().toString()+"/",
+							  whiteList, blackList, this.config.getPageTimeout(),
 							  this.config.getMaxRequestNumber());
 				Thread t = new Thread(r);
 				listaThreads.add(t);
@@ -208,7 +209,7 @@ public class App {
 		String tempoString = Long.toString(tempoDecorrido) + '\n';
 
 		try {
-			Files.write(Paths.get(this.config.getLogsDirPath().toString(), pathdict.getAtributo("time")), tempoString.getBytes());
+			Files.write(Paths.get(this.config.getLogsDirPath().toString(), this.logsWriter.getStandardFileNameFromSuffix("time")), tempoString.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -216,10 +217,9 @@ public class App {
 	}
 
 	public void escreverUrlsRestantes() {
-		EscritorArquivo restantes = null;
+		FileWriter restantes = null;
 		try {
-			restantes = new EscritorArquivo(Paths.get(this.config.getRepositoryPath().toString(),"urlsrestantes").toString(),
-													  true, false, "UTF-8");
+			restantes = new FileWriter(this.config.getRepositoryPath().resolve("urlsrestantes"), false);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -228,7 +228,7 @@ public class App {
 		while (listaUrls.isEmpty() == false) {
 			try {
 				String url = listaUrls.take();
-				restantes.escreveArquivo(url+"\n");
+				restantes.write(url+"\n");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

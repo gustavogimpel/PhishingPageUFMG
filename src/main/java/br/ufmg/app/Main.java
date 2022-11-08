@@ -17,7 +17,9 @@ public class Main {
 		// TODO: Print the JSON configuration
 
 		// System.out().setParameters(windowTimeout, maxRequestNumber);
-		Singleton.getInstance().setParameters(config.getWindowTimeout(), config.getMaxRequestNumber());
+		Singleton.getInstance().setParameters(config.getWindowTimeout(),
+											  config.getMaxRequestNumber(),
+											  config.getLogsDirPath());
 
 		// App aplicacao = new App(concurrentBrowserInstancesNumber,
 		// 						pageTimeout,
@@ -29,7 +31,13 @@ public class Main {
 
 		App aplicacao = new App(config);
 		System.out.println("HERE");
-		aplicacao.configurarCaminhos();
+
+		try {
+			aplicacao.startLogFiles();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 		aplicacao.obterArquivos();
 		aplicacao.obterUrls();
 		aplicacao.administrarProcessos();

@@ -1,4 +1,4 @@
-package br.ufmg.app;
+package br.ufmg.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;

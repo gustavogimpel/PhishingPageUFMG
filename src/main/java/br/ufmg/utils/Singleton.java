@@ -3,6 +3,7 @@ package br.ufmg.utils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,11 +14,14 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import br.ufmg.app.Configuration;
+
 
 public class Singleton{
 	static private Singleton _instance;
 	private Map<String,List<Long>> dicionarioRequisicoes;
 	private long tempoInicio;
+	private Path outputDir;
 	private int janela_requisicoes;
 	private int limite_requisicoes;
 	// methods and attributes for Singleton pattern
@@ -38,7 +42,8 @@ public class Singleton{
 	}
 
 	// metodos e atributos globais
-	synchronized public void setParameters(int janela_requisicoes,int limite_requisicoes) {
+	synchronized public void setParameters(int janela_requisicoes,int limite_requisicoes, Path outputDir) {
+		this.outputDir = outputDir;
 		this.janela_requisicoes = janela_requisicoes;
 		this.limite_requisicoes = limite_requisicoes;
 	}
@@ -78,11 +83,11 @@ public class Singleton{
 		}
 		Collections.sort(listaDomReq);
 		try {
-			EscritorArquivo logRequests = new EscritorArquivo("/home/tlhop/aplicacao_urls/urls/requisicoes",true,false,"UTF-8");
+			FileWriter outputFile = new FileWriter(this.outputDir.resolve("requisicoes"),false);
 			for (Par par:listaDomReq) {
-				logRequests.escreveArquivo(par.primeiroValor()+"  "+par.segundoValor()+"\n");
+				outputFile.write(par.primeiroValor()+"  "+par.segundoValor()+"\n");
 			}
-			logRequests.close();
+			outputFile.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
