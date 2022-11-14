@@ -1,15 +1,11 @@
 package br.ufmg.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +20,7 @@ import org.jsoup.nodes.Document;
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersAdapter;
 import org.littleshoot.proxy.HttpFiltersSourceAdapter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Proxy;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.google.common.net.HttpHeaders;
@@ -41,7 +35,6 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.HarEntry;
-import net.lightbody.bmp.util.HttpMessageInfo;
 
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -50,11 +43,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class Processo implements Runnable {
 
-	private int porta;
 	private int pid;
 	private int timeout;
 	private int limite_requisicoes;
-	private String fdir;
 	private BrowserMobProxy proxy;
 	private Proxy seleniumProxy;
 	private FirefoxDriver driver;
@@ -73,7 +64,6 @@ public class Processo implements Runnable {
 		this.listaUrls = listaUrls;
 		pid = id;
 		this.logsWriter = logsWriter;
-		fdir = diretorio;
 		dominiosBloqueados = new HashMap<String,Integer>();
 		this.terminarProcessos = terminarProcessos;
 		this.reiniciarProcessos = reiniciarProcessos;
@@ -159,7 +149,6 @@ public class Processo implements Runnable {
 		driver = new FirefoxDriver(options);
 	}
 
-	@SuppressWarnings("deprecation")
 	public Resposta acessaUrl(String urlComposta) {
 		String[] temp = urlComposta.split("  ");
 		String url = temp[0];
