@@ -8,14 +8,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MemoryMonitor implements Runnable {
 
-	private AtomicBoolean reiniciarProcessos;
+	private AtomicBoolean processesRestart;
 
 	public MemoryMonitor(AtomicBoolean rp) {
-		reiniciarProcessos = rp;
+		processesRestart = rp;
 	}
 
 	public void run() {
-		int nReinicios = 0;
+		int numberOfRestarts = 0;
 		while (true) {
 			try {
 				TimeUnit.SECONDS.sleep(1);
@@ -54,13 +54,13 @@ public class MemoryMonitor implements Runnable {
 				e.printStackTrace();
 				continue;
 			}
-			String[] lista_output = tokens.split("\\s+");
-			double mem_percent = ((Double.parseDouble(lista_output[1]) - Double.parseDouble(lista_output[6]))
-					/ Double.parseDouble(lista_output[1])) * 100;
-			if (mem_percent > 70.0) {
-				nReinicios++;
-				System.out.println("Reiniciando " + nReinicios);
-				reiniciarProcessos.set(true);
+			String[] outputList = tokens.split("\\s+");
+			double memoryPercent = ((Double.parseDouble(outputList[1]) - Double.parseDouble(outputList[6]))
+					/ Double.parseDouble(outputList[1])) * 100;
+			if (memoryPercent > 70.0) {
+				numberOfRestarts++;
+				System.out.println("[INFO] Restarting process " + numberOfRestarts + "...");
+				processesRestart.set(true);
 				try {
 					p = Runtime.getRuntime().exec("pkill -9 firefox");
 					p.waitFor();

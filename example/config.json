@@ -3,10 +3,10 @@
     "pageTimeout": 15,
     "windowTimeout": 1800,
     "maxRequests": 60,
-    "logsDirPath":"./logs",
     "repositoryPath": "./repo",
     "geckodriverBinPath": "/usr/bin/geckodriver",
     "runtimeControllersPath": "runtime_params",
+    "logsDirPath": "./logs",
     "blackListPath": "blackListDirectoryOrFile",
     "whiteListPath": "whiteListtDirectoryOrFile"
 }

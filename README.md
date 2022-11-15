@@ -27,7 +27,7 @@ To check the compatibility list, please visit
 After installing Firefox and Geckdriver, build the project as shown in
 [Build](#build).
 
-Then, from the root directory, the application can be run as: 
+Then, from the root directory, the application can be run as:
 ```sh
 java -jar target/WebPhishingFramework.jar path_to_config_file.json
 ```
@@ -43,7 +43,7 @@ as follows:
 java -jar target/WebPhishingFramework.jar ./example/config.json
 ```
 
-To understant the configuration environment, go to
+To understand the configuration environment, go to
 [Execution Environment](#execution-environment).
 
 ## Execution Environment
@@ -51,41 +51,59 @@ To understant the configuration environment, go to
 ### Configuration file
 It is a JSON file containing an object with five parameters:
 
-* `concurrentBrowsers`: \[REQUIRED\] Number of concurrent browser instances.
-* `pageTimeout`: \[REQUIRED\] Page timeout.
-* `windowTimeout`: \[REQUIRED\] Time window for request limiting.
-* `maxRequests`: \[REQUIRED\] Request limit per defined time window.
-* `repositoryPath`: \[REQUIRED\] The path of the file or folder containing the
-  list of urls to be monitored.
+* `concurrentBrowsers`: **\[REQUIRED\]** Number of concurrent browser instances.
+* `pageTimeout`: **\[REQUIRED\]** Page timeout.
+* `windowTimeout`: **\[REQUIRED\]** Time window for request limiting.
+* `maxRequests`: **\[REQUIRED\]** Request limit per defined time window.
+* `repositoryPath`: **\[REQUIRED\]** The path of the file or folder containing
+  the list of urls to be monitored.
   If it is a file, the urls must be separated by a line breaker.
   Otherwise, if it is a directory, all the files into that must have only urls
-  separated by linebreakers.
-* `geckodriverBinPath`: \[REQUIRED\] The path of the Geckodriver binary file.
-* `logsDirPath`:  The directory where all the output logs of this application will
-  be writen.
+  separated by line breakers.
+* `geckodriverBinPath`: **\[REQUIRED\]** The path of the Geckodriver binary
+  file.
+* `runtimeControllersPath`: **\[REQUIRED\]** The path of the directory which
+  contains all the [Runtime Control Files](#remote-controller-files).
+* `logsDirPath`:  The directory where all the output logs of this application
+  will be written.
   **WARNING**: This is not a required configuration, but if it is not provided,
   the current work directory is chosen as the logs destination.
 * `whiteListPath`: The path of the file or folder containing the list of urls
   of the white list. <!--TODO: improve the explanation about the white list -->
   If it is a file, the urls must be separated by a line breaker.
   Otherwise, if it is a directory, all the files into that must have only urls
-  separated by linebreakers.
+  separated by line breakers.
 * `blackListPath`: The path of the file or folder containing the list of urls
-  of the black list. <!--TODO: improve the explanation about the white list -->
+  of the black list. <!--TODO: improve the explanation about the black list -->
   If it is a file, the urls must be separated by a line breaker.
   Otherwise, if it is a directory, all the files into that must have only urls
-  separated by linebreakers.
+  separated by line breakers.
 
 > All the configurations with the suffix `Path` can be specified by absolute
 paths or relative paths from the same directory of the configuration file.
 
-See the exemple configuration file at [config.json](example/config.json).
+See the example configuration file at [config.json](example/config.json).
 
-### Input directories
-TODO
+### Runtime Control Files
+Our goal is to provide a monitor that can be incremented while it keeps
+running.
+For that task, we've used file readers to capture the commands that are
+passed in runtime.
+Such files must be placed into the directory specified by the
+`runtimeControllersPath` configuration.
+
+* `running`: a text file named `running` that handles only one char: either `0`
+  or `1`.
+  When the monitor is started, such property must be started with `1`.
+  In case the user needs to stop the application, just override the value by
+  `0`.
+  It makes able to kill the monitor by a simple command like:
+  ```sh
+  echo 0 > <path_to_runtimeControllersPath>/running
+  ```
 
 ### Log directories
-TODO 
+TODO
 
 ## License
 Distributed under MIT license.

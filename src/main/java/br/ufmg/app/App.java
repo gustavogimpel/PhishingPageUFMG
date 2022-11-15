@@ -67,12 +67,16 @@ public class App {
 		if (repo.isDirectory()) {
 			urlFiles = repo.listFiles();
 			Arrays.sort(urlFiles, Comparator.comparingLong(File::lastModified));
+		} else if(repo.isFile()){
+			urlFiles = new File[]{repo};
 		} else {
-			System.err.println("[ERROR] Inexistent URLs recip " + this.config.getRepositoryPath().toString());
+			System.err.println("[ERROR] Inexistent URLs repository " + this.config.getRepositoryPath().toString());
 			System.exit(-1);
 		}
+
 		if (urlFiles.length == 0) {
-			System.exit(0);
+			System.err.println("[ERROR] Empty URLs repository" + this.config.getRepositoryPath().toString());
+			System.exit(-1);
 		}
 	}
 
