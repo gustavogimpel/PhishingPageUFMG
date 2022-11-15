@@ -3,7 +3,6 @@ package br.ufmg.utils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,78 +10,80 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import br.ufmg.app.Configuration;
-
-
-public class Singleton{
+public class Singleton {
 	static private Singleton _instance;
-	private Map<String,List<Long>> dicionarioRequisicoes;
-	private long tempoInicio;
-	private Path outputDir;
-	private int janela_requisicoes;
-	private int limite_requisicoes;
+	private Map<String, List<Long>> requestsDict;
+	private long startTime;
+	private LogsWriter logsWriter;
+	private int requestsWindow;
+
 	// methods and attributes for Singleton pattern
-	private Singleton() {initGlobals();}
+	private Singleton() {
+		initGlobals();
+	}
 
 	private void initGlobals() {
-		dicionarioRequisicoes = new HashMap<String,List<Long>>();
-		tempoInicio = System.currentTimeMillis();
+		requestsDict = new HashMap<String, List<Long>>();
+		startTime = System.currentTimeMillis();
 	}
 
 	public static Singleton getInstance() {
 		if (_instance == null) {
-			synchronized(Singleton.class) {
-				if (_instance == null)_instance = new Singleton();
+			synchronized (Singleton.class) {
+				if (_instance == null)
+					_instance = new Singleton();
 			}
 		}
 		return _instance;
 	}
 
 	// metodos e atributos globais
-	synchronized public void setParameters(int janela_requisicoes,int limite_requisicoes, Path outputDir) {
-		this.outputDir = outputDir;
-		this.janela_requisicoes = janela_requisicoes;
-		this.limite_requisicoes = limite_requisicoes;
+	synchronized public void setParameters(int requestsWindow, LogsWriter logsWriter) {
+		this.logsWriter = logsWriter;
+		this.requestsWindow = requestsWindow;
 	}
 
-	synchronized public boolean isInDict(String dominio) {
-		return dicionarioRequisicoes.containsKey(dominio);
+	synchronized public boolean isInDict(String domain) {
+		return requestsDict.containsKey(domain);
 	}
 
-	synchronized public int getNumeroReq(String dominio) {
-		if(((System.currentTimeMillis() - tempoInicio))/1000 > janela_requisicoes) {
+	synchronized public int getNumeroReq(String domain) {
+		if (((System.currentTimeMillis() - this.startTime)) / 1000 > this.requestsWindow) {
 			printHighestScores();
 		}
-		Predicate<Long> timePassed = timeBefore -> (((System.currentTimeMillis() - timeBefore))/1000 > janela_requisicoes);
-		dicionarioRequisicoes.get(dominio).removeIf(timePassed);
-		return dicionarioRequisicoes.get(dominio).size();
+		Predicate<Long> spentTime = timeBefore -> (((System.currentTimeMillis() - timeBefore))
+				/ 1000 > this.requestsWindow);
+		this.requestsDict.get(domain).removeIf(spentTime);
+		return this.requestsDict.get(domain).size();
 	}
 
-	synchronized public void setNumeroReq(String dominio,long valor) {
-		if (isInDict(dominio)) {
-			dicionarioRequisicoes.get(dominio).add(valor);
-		}else {
-			List<Long> novaLista = new ArrayList<Long>();
-			novaLista.add(valor);
-			dicionarioRequisicoes.put(dominio, novaLista);
+	synchronized public void setRequestsNumber(String domain, long value) {
+		if (isInDict(domain)) {
+			this.requestsDict.get(domain).add(value);
+		} else {
+			List<Long> newList = new ArrayList<Long>();
+			newList.add(value);
+			this.requestsDict.put(domain, newList);
 		}
 	}
 
 	synchronized public void printHighestScores() {
-		List<Par> listaDomReq = new ArrayList<Par>();
-		for(Map.Entry<String,List<Long>> entry : dicionarioRequisicoes.entrySet()) {
-			List<Long> listaReqs = entry.getValue();
-			for(Long req : listaReqs) {
-				Long res = req - tempoInicio;
-				Par temp = new Par(entry.getKey(),res.floatValue()/1000);
-				listaDomReq.add(temp);
+		List<Pair> domainRequestsList = new ArrayList<Pair>();
+		for (Map.Entry<String, List<Long>> entry : this.requestsDict.entrySet()) {
+			List<Long> requestsList = entry.getValue();
+			for (Long req : requestsList) {
+				Long res = req - this.startTime;
+				Pair temp = new Pair(entry.getKey(), res.floatValue() / 1000);
+				domainRequestsList.add(temp);
 			}
 		}
-		Collections.sort(listaDomReq);
+		Collections.sort(domainRequestsList);
 		try {
-			FileWriter outputFile = new FileWriter(this.outputDir.resolve("requisicoes"),false);
-			for (Par par:listaDomReq) {
-				outputFile.write(par.primeiroValor()+"  "+par.segundoValor()+"\n");
+			FileWriter outputFile = new FileWriter(this.logsWriter.getLogDirPath().resolve(
+					this.logsWriter.getStandardFileNameFromSuffix("requests")),
+					false);
+			for (Pair par : domainRequestsList) {
+				outputFile.write(par.firstValue() + "  " + par.secondValue() + "\n");
 			}
 			outputFile.close();
 		} catch (FileNotFoundException e) {

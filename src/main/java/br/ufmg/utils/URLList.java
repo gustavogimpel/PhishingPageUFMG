@@ -24,7 +24,7 @@ public class URLList {
 
 	private void addURLsFromFile(Path urlFilePath) throws IOException {
 		BufferedReader fileData = Files.newBufferedReader(urlFilePath, charset);
-		for(String line = fileData.readLine(); line != null; line = fileData.readLine()) {
+		for (String line = fileData.readLine(); line != null; line = fileData.readLine()) {
 			this.urlsSet.add(line);
 		}
 	}
@@ -32,18 +32,18 @@ public class URLList {
 	private void readURLsFromFile() throws IOException {
 		File repository = urlListFilePath.toFile();
 		if (repository.exists()) {
-			if(repository.isFile()) {
+			if (repository.isFile()) {
 				this.addURLsFromFile(this.urlListFilePath);
 			} else if (repository.isDirectory()) {
 				DirectoryStream<Path> directory = Files.newDirectoryStream(this.urlListFilePath);
-				for(Path filePath: directory) {
+				for (Path filePath : directory) {
 					this.addURLsFromFile(filePath);
 				}
 			} else {
-				// throw ....
+				System.err.println("[WARN] The file or directory " + this.urlListFilePath.toString() + " does not exists. So it will be ignored.");
 			}
 		} else {
-			// throw ... // File "Path.toString() does not exists"
+			System.err.println("[WARN] The file or directory " + this.urlListFilePath.toString() + " does not exists. So it will be ignored.");
 		}
 	}
 

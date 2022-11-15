@@ -24,13 +24,14 @@ public class App {
 	private LogsWriter logsWriter;
 	private URLList whiteList;
 	private URLList blackList;
-	private File[] arquivos;
-	private BlockingQueue<String> listaUrls;
-	private AtomicBoolean reiniciarProcessos;
-	private AtomicBoolean terminarProcessos;
+	private File[] urlFiles;
+	private BlockingQueue<String> urlsList;
+	private AtomicBoolean restartProcesses;
+	private AtomicBoolean killProcesses;
 
-	/* Inicialização de variáveis.*/
-	public App(Configuration config) { //int instancias, int timeout, int limite_requisicoes, Path repository, Path whiteList, Path blackList, Path logsDir) {
+	/* Inicialização de variáveis. */
+	public App(Configuration config) { // int instancias, int timeout, int limite_requisicoes, Path repository, Path
+										// whiteList, Path blackList, Path logsDir) {
 		try {
 			this.whiteList = new URLList(config.getWhiteListPath());
 			this.blackList = new URLList(config.getBlackListPath());
@@ -38,46 +39,51 @@ public class App {
 			e.printStackTrace();
 		}
 		this.config = config;
-		listaUrls = new LinkedBlockingDeque<String>();
-		reiniciarProcessos =  new AtomicBoolean();
-		reiniciarProcessos.set(false);
-		terminarProcessos =  new AtomicBoolean();
-		terminarProcessos.set(false);
+		urlsList = new LinkedBlockingDeque<String>();
+		restartProcesses = new AtomicBoolean(false);
+		killProcesses = new AtomicBoolean(false);
 	}
 
-	public void startLogFiles() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+	public void run() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+		this.startLogFiles();
+		this.singletonSetup();
+		this.getFiles();
+		this.getURLs();
+		this.manageProcesses();
+	}
+
+	private void startLogFiles() throws FileNotFoundException, UnsupportedEncodingException, IOException {
 		this.logsWriter = new LogsWriter(config.getLogsDirPath(), config.getConcurrentBrowserInstancesNumber());
 		this.logsWriter.createFiles();
 	}
 
-	/* Função que realiza a leitura de arquivos. */
-	public void obterArquivos() {
+	private void singletonSetup() {
+		Singleton.getInstance().setParameters(this.config.getWindowTimeout(), this.logsWriter);
+	}
 
+	/* Função que realiza a leitura de arquivos. */
+	private void getFiles() {
 		File repo = this.config.getRepositoryPath().toFile();
-		if ( repo.isDirectory() ) {
-			arquivos = repo.listFiles();
-			Arrays.sort(arquivos, Comparator.comparingLong(File::lastModified));
+		if (repo.isDirectory()) {
+			urlFiles = repo.listFiles();
+			Arrays.sort(urlFiles, Comparator.comparingLong(File::lastModified));
 		} else {
-			try {
-				String data = "Recipiente de urls inexistente: "+ this.logsWriter.getFormatedDate();
-				Files.write(Paths.get(this.logsWriter.getStandardFileNameFromSuffix("recip")), data.getBytes());
-			} catch (Exception e){
-				e.printStackTrace();
-			}
+			System.err.println("[ERROR] Inexistent URLs recip " + this.config.getRepositoryPath().toString());
+			System.exit(-1);
 		}
-		if (arquivos.length == 0) {
+		if (urlFiles.length == 0) {
 			System.exit(0);
 		}
 	}
 
 	/* Função que realiza a leitura de URLs. */
-	public void obterUrls() {
+	private void getURLs() {
 		Charset charset = Charset.forName("UTF-8");
-		for (File arquivo : arquivos) {
+		for (File file : urlFiles) {
 			try {
-				List<String> linhas = Files.readAllLines(arquivo.toPath(),charset);
-				for (String linha : linhas) {
-					listaUrls.add(linha);
+				List<String> lines = Files.readAllLines(file.toPath(), charset);
+				for (String line : lines) {
+					urlsList.add(line);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -85,156 +91,143 @@ public class App {
 				e.printStackTrace();
 			}
 		}
-		/*for (int i = 0;i < this.instancias;i++) {
-			listaUrls.add("poison_pill");
-		}*/
-		System.out.println(listaUrls.size());
 	}
 
-	/* Função que determina se a aplicação deve parar, realizando
-	 * a leitura de um arquivo na pasta shellscripts/sys/operante. */
-	public int appOperante() {
-		int status = 0;
-		int tries = 0;
-
-		BufferedReader br = null;
+	/*
+	 * Função que determina se a aplicação deve parar, realizando
+	 * a leitura de um arquivo na pasta shellscripts/sys/operante.
+	 */
+	public boolean isAppRunning() {
+		File runtimeFile = config.getRuntimeControllersPath().resolve("running").toFile();
+		if (!runtimeFile.exists()) {
+			System.err.println("[ERROR] The runtime file " + runtimeFile.toString() + " does not exists.");
+			System.exit(-1);
+		}
 		try {
-			br = new BufferedReader(new FileReader("/home/vrjuliao/workfolder/web-phishing-framework/data/operante"));
+			BufferedReader br = new BufferedReader(new FileReader(runtimeFile.toString()));
+			char isRunningBoolean = (char) br.read();
+			br.close();
+			return (isRunningBoolean != '0');
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.exit(-1);
+		} catch (IOException e) {
+			System.err.println("[WARNING] Something has gone wrong with" + runtimeFile.toString()
+					+ ". So, the app keeps running.");
 		}
-		String line = null;
-		while(tries < 3) {
-			try {
-				while ((line = br.readLine()) != null) {
-				  String[] parts = line.split(" ");
-				  status = Integer.parseInt(parts[0]);
-				  //System.out.println(status);
-				}
-				break;
-			} catch (IOException e) {
-				tries++;
-			}
-		}
-		return status;
+		return true;
 	}
 
 	/* Função principal. Administa o multithreading */
-	@SuppressWarnings("deprecation")
-	public void administrarProcessos() {
-		SimpleDateFormat dataInicio = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+	private void manageProcesses() {
+		SimpleDateFormat startDate = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
-		Date data = new Date();
-		String dataFormatada = dataInicio.format(data);
-		String inicio = "Inicio em "+dataFormatada+"\n";
+		Date date = new Date();
+		String formatedDate = startDate.format(date);
+		String startDateStr = "Started at " + formatedDate + "\n";
 		try {
-			Files.write(Paths.get(this.config.getLogsDirPath().toString(), this.logsWriter.getStandardFileNameFromSuffix("inicio")), inicio.getBytes());
+			Files.write(Paths.get(this.config.getLogsDirPath().toString(),
+					this.logsWriter.getStandardFileNameFromSuffix("inicio")), startDateStr.getBytes());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 
-		MonitorMemoria memoryMonitor = new MonitorMemoria(reiniciarProcessos);
+		MemoryMonitor memoryMonitor = new MemoryMonitor(restartProcesses);
 		Thread monitor = new Thread(memoryMonitor);
 		monitor.start();
 
-		List<Thread> listaThreads = new LinkedList<Thread>();
+		List<Thread> threadsList = new LinkedList<Thread>();
 
 		Predicate<Thread> isDead = t -> !t.isAlive();
 
-		long tempoInicio = System.nanoTime();
-		int indice = 0;
+		long startTime = System.nanoTime();
+		int index = 0;
 
-		while(appOperante() == 1) {
+		while (isAppRunning()) {
 
-			if(terminarProcessos.get()) {
+			if (killProcesses.get()) {
 				break;
 			}
 
-			if(reiniciarProcessos.get()) {
-				//terminarProcessos.set(true);
-				System.out.println("Esperando");
-				for (Thread thread : listaThreads ) {
+			if (restartProcesses.get()) {
+				System.out.println("[INFO] Waiting...");
+				for (Thread thread : threadsList) {
 					try {
 						thread.join(600000);
 					} catch (InterruptedException e) {
 						continue;
 					}
 				}
-				Process pr;
 				try {
-					pr = Runtime.getRuntime().exec("pkill -9 firefox");
-					pr = Runtime.getRuntime().exec("pkill -9 geckodriver");
+					Runtime.getRuntime().exec("pkill -9 firefox");
+					Runtime.getRuntime().exec("pkill -9 geckodriver");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				//terminarProcessos.set(false);
-				reiniciarProcessos.set(false);
+				restartProcesses.set(false);
 			}
-			listaThreads.removeIf(isDead);
-			if(listaThreads.size() >= this.config.getConcurrentBrowserInstancesNumber()) {
+			threadsList.removeIf(isDead);
+			if (threadsList.size() >= this.config.getConcurrentBrowserInstancesNumber()) {
 				try {
 					TimeUnit.SECONDS.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}else {
-				Processo r = new Processo(listaUrls, terminarProcessos, reiniciarProcessos,
-							 indice, this.logsWriter, this.config.getLogsDirPath().toString()+"/",
-							  whiteList, blackList, this.config.getPageTimeout(),
-							  this.config.getMaxRequestNumber());
+			} else {
+				br.ufmg.utils.Process r = new br.ufmg.utils.Process(
+						urlsList, killProcesses, restartProcesses,
+						index, this.logsWriter, whiteList, blackList,
+						this.config.getPageTimeout(),
+						this.config.getMaxRequestNumber(),
+						this.config.getGeckodriverBinPath().toString());
 				Thread t = new Thread(r);
-				listaThreads.add(t);
+				threadsList.add(t);
 				t.start();
-				System.out.println("Thread "+Integer.toString(indice)+" criada");
-				indice += 1;
+				System.out.println("[INFO] Starting thread " + Integer.toString(index));
+				index += 1;
 			}
 		}
 
-		for (Thread thread : listaThreads ) {
+		for (Thread thread : threadsList) {
 			try {
-				thread.join(600000);
+				thread.join(1000);
+				// thread.join(600000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 
 		monitor.interrupt();
-		escreverUrlsRestantes();
-		System.out.println("aaaa");
+		writeRemainingURLs();
 		System.gc();
 
-		long tempoFinal = System.nanoTime();
-		long tempoDecorrido = tempoFinal - tempoInicio;
-		String tempoString = Long.toString(tempoDecorrido) + '\n';
+		long finalTime = System.nanoTime();
+		long spentTime = finalTime - startTime;
+		String timeString = Long.toString(spentTime) + '\n';
 
 		try {
-			Files.write(Paths.get(this.config.getLogsDirPath().toString(), this.logsWriter.getStandardFileNameFromSuffix("time")), tempoString.getBytes());
+			Files.write(this.config.getLogsDirPath().resolve(this.logsWriter.getStandardFileNameFromSuffix("time")),
+					timeString.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.exit(0);
+
 	}
 
-	public void escreverUrlsRestantes() {
-		FileWriter restantes = null;
+	private void writeRemainingURLs() {
 		try {
-			restantes = new FileWriter(this.config.getRepositoryPath().resolve("urlsrestantes"), false);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		while (listaUrls.isEmpty() == false) {
-			try {
-				String url = listaUrls.take();
-				restantes.write(url+"\n");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			FileWriter remaining = new FileWriter(this.config.getLogsDirPath()
+					.resolve(this.logsWriter.getStandardFileNameFromSuffix("remaining_urls")), false);
+
+			while (urlsList.isEmpty() == false) {
+				try {
+					String url = urlsList.take();
+					remaining.write(url + "\n");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-		}
-		try {
-			restantes.close();
+			remaining.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

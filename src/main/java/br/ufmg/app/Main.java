@@ -1,11 +1,9 @@
 package br.ufmg.app;
 
-import br.ufmg.utils.Singleton;
-
 public class Main {
 	public static void main(String[] args) {
 
-		if(args.length > 1) {
+		if (args.length > 1) {
 			System.err.println("The only required parameter is the configuration filepath.");
 			System.exit(-1);
 		} else if (args.length < 1) {
@@ -16,31 +14,14 @@ public class Main {
 		Configuration config = new Configuration(args[0]);
 		// TODO: Print the JSON configuration
 
-		// System.out().setParameters(windowTimeout, maxRequestNumber);
-		Singleton.getInstance().setParameters(config.getWindowTimeout(),
-											  config.getMaxRequestNumber(),
-											  config.getLogsDirPath());
-
-		// App aplicacao = new App(concurrentBrowserInstancesNumber,
-		// 						pageTimeout,
-		// 						maxRequestNumber,
-		// 						repository,
-		// 						blackList,
-		// 						whiteList,
-		// 						logsDir);
-
-		App aplicacao = new App(config);
-		System.out.println("HERE");
+		App app = new App(config);
 
 		try {
-			aplicacao.startLogFiles();
+			app.run();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		aplicacao.obterArquivos();
-		aplicacao.obterUrls();
-		aplicacao.administrarProcessos();
-
+		System.exit(0);
 	}
 }

@@ -6,24 +6,24 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MonitorMemoria implements Runnable {
+public class MemoryMonitor implements Runnable {
 
 	private AtomicBoolean reiniciarProcessos;
 
-	public MonitorMemoria(AtomicBoolean rp) {
+	public MemoryMonitor(AtomicBoolean rp) {
 		reiniciarProcessos = rp;
 	}
 
 	public void run() {
 		int nReinicios = 0;
-		while(true) {
+		while (true) {
 			try {
 				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e1) {
 				return;
 			}
 
-			Process p;
+			java.lang.Process p;
 			try {
 				p = Runtime.getRuntime().exec("free -t -m");
 			} catch (IOException e) {
@@ -55,10 +55,11 @@ public class MonitorMemoria implements Runnable {
 				continue;
 			}
 			String[] lista_output = tokens.split("\\s+");
-			double mem_percent = ((Double.parseDouble(lista_output[1]) - Double.parseDouble(lista_output[6]))/Double.parseDouble(lista_output[1]))*100;
-			if ( mem_percent > 70.0 ) {
+			double mem_percent = ((Double.parseDouble(lista_output[1]) - Double.parseDouble(lista_output[6]))
+					/ Double.parseDouble(lista_output[1])) * 100;
+			if (mem_percent > 70.0) {
 				nReinicios++;
-				System.out.println("Reiniciando "+nReinicios);
+				System.out.println("Reiniciando " + nReinicios);
 				reiniciarProcessos.set(true);
 				try {
 					p = Runtime.getRuntime().exec("pkill -9 firefox");
@@ -73,7 +74,6 @@ public class MonitorMemoria implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			//System.out.println(mem_percent);
 		}
 	}
 }

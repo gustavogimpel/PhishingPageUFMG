@@ -20,40 +20,43 @@ public class Configuration {
     private Path whiteListPath;
     private Path blackListPath;
     private Path repositoryPath;
+    private Path runtimeControllersPath;
     private Path logsDirPath;
 
-    public Configuration(String configFilePathStr){
-        // Get configuration file and the propoer filepaths to get the path of the auxiliar files.
-		Path currentWorkDir = Paths.get("").toAbsolutePath();
-		this.configFilePath = Paths.get(currentWorkDir.toString(), configFilePathStr).toAbsolutePath();
+    public Configuration(String configFilePathStr) {
+        // Get configuration file and the propoer filepaths to get the path of the
+        // auxiliar files.
+        Path currentWorkDir = Paths.get("").toAbsolutePath();
+        this.configFilePath = Paths.get(currentWorkDir.toString(), configFilePathStr).toAbsolutePath();
 
-		// Reading configuration JSON file
-		try (FileReader reader = new FileReader(this.configFilePath.toString())) {
-			JSONTokener jsonTokener = new JSONTokener(reader);
-			JSONObject configObject = new JSONObject(jsonTokener);
+        // Reading configuration JSON file
+        try (FileReader reader = new FileReader(this.configFilePath.toString())) {
+            JSONTokener jsonTokener = new JSONTokener(reader);
+            JSONObject configObject = new JSONObject(jsonTokener);
 
-			// Required parameters
-			this.readConcurrentBrowserInstancesNumber(configObject);
-			this.readPageTimeout(configObject);
-			this.readWindowTimeout(configObject);
-			this.readMaxRequestNumber(configObject);
+            // Required parameters
+            this.readConcurrentBrowserInstancesNumber(configObject);
+            this.readPageTimeout(configObject);
+            this.readWindowTimeout(configObject);
+            this.readMaxRequestNumber(configObject);
             this.readRepositoryPath(configObject);
+            this.readRuntimeControllersPath(configObject);
             this.readGeckodriverBinaryPath(configObject);
 
-			// Optional parameters
-			this.readLogsDirPath(configObject);
+            // Optional parameters
+            this.readLogsDirPath(configObject);
             this.readBlackListPath(configObject);
             this.readWhiteListPath(configObject);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} catch (JSONException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
     }
 
     private void readConcurrentBrowserInstancesNumber(JSONObject configObject) throws JSONException {
@@ -61,7 +64,7 @@ public class Configuration {
     }
 
     private void readPageTimeout(JSONObject configObject) throws JSONException {
-		this.pageTimeout = configObject.getInt("pageTimeout");
+        this.pageTimeout = configObject.getInt("pageTimeout");
     }
 
     private void readWindowTimeout(JSONObject configObject) throws JSONException {
@@ -75,6 +78,11 @@ public class Configuration {
     private void readRepositoryPath(JSONObject configObject) throws JSONException {
         Path specifiedRepository = Paths.get(configObject.getString("repositoryPath"));
         this.repositoryPath = readRelativeOrAbsolutePath(specifiedRepository);
+    }
+
+    private void readRuntimeControllersPath(JSONObject configObject) throws JSONException {
+        Path specifiedAttribute = Paths.get(configObject.getString("runtimeControllersPath"));
+        this.runtimeControllersPath = readRelativeOrAbsolutePath(specifiedAttribute);
     }
 
     private void readGeckodriverBinaryPath(JSONObject configObject) throws JSONException {
@@ -105,8 +113,8 @@ public class Configuration {
         }
     }
 
-    private Path readRelativeOrAbsolutePath(Path pathAttribute){
-        if(pathAttribute.isAbsolute()){
+    private Path readRelativeOrAbsolutePath(Path pathAttribute) {
+        if (pathAttribute.isAbsolute()) {
             return pathAttribute;
         } else {
             return this.configFilePath.getParent().resolve(pathAttribute).toAbsolutePath().normalize();
@@ -151,6 +159,10 @@ public class Configuration {
 
     public Path getLogsDirPath() {
         return this.logsDirPath;
+    }
+
+    public Path getRuntimeControllersPath() {
+        return this.runtimeControllersPath;
     }
 
 }

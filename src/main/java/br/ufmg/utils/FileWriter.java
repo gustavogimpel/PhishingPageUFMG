@@ -15,7 +15,7 @@ public class FileWriter {
     private BufferedWriter bw;
     private PrintWriter wr;
 
-    public FileWriter (Path filePath, boolean autoFlush) throws FileNotFoundException, UnsupportedEncodingException {
+    public FileWriter(Path filePath, boolean autoFlush) throws FileNotFoundException, UnsupportedEncodingException {
         fos = new FileOutputStream(filePath.toFile(), true);
         osw = new OutputStreamWriter(fos, "UTF-8");
         bw = new BufferedWriter(osw);

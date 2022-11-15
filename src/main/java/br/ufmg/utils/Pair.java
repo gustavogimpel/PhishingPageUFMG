@@ -1,24 +1,24 @@
 package br.ufmg.utils;
 
-public class Par implements Comparable<Par> {
+public class Pair implements Comparable<Pair> {
 	private final String x;
 	private final float y;
 
-	public Par(String x,float req) {
+	public Pair(String x,float req) {
 		this.x = x;
 		this.y = req;
 	}
 
-	public String primeiroValor() {
+	public String firstValue() {
 		return x;
 	}
 
-	public float segundoValor() {
+	public float secondValue() {
 		return y;
 	}
 
 	@Override
-	public int compareTo(Par arg0) {
+	public int compareTo(Pair arg0) {
 		if(y == arg0.y) {
 			return 0;
 		}else if(y > arg0.y) {
