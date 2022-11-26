@@ -130,8 +130,11 @@ public class App {
 		String formatedDate = startDate.format(date);
 		String startDateStr = "Started at " + formatedDate + "\n";
 		try {
-			Files.write(Paths.get(this.config.getLogsDirPath().toString(),
-					this.logsWriter.getStandardFileNameFromSuffix("inicio")), startDateStr.getBytes());
+			File timeFile = Paths.get(this.logsWriter.getStandardFileNameFromSuffix("inicio")).toFile();
+			if (!timeFile.exists()) {
+				timeFile.createNewFile();
+			}
+			Files.write(timeFile.toPath(), startDateStr.getBytes());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -210,8 +213,11 @@ public class App {
 		String timeString = Long.toString(spentTime) + '\n';
 
 		try {
-			Files.write(this.config.getLogsDirPath().resolve(this.logsWriter.getStandardFileNameFromSuffix("time")),
-					timeString.getBytes());
+			File timeFile = Paths.get(this.logsWriter.getStandardFileNameFromSuffix("time")).toFile();
+			if (!timeFile.exists()) {
+				timeFile.createNewFile();
+			}
+			Files.write(timeFile.toPath(), timeString.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

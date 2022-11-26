@@ -159,7 +159,7 @@ public class Process implements Runnable {
 		options.setHeadless(true);
 		options.merge(capabilities);
 
-		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "null");
+		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, this.logsWriter.getStandardFileNameFromSuffix("null"));
 		driver = new FirefoxDriver(options);
 	}
 

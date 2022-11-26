@@ -46,6 +46,23 @@ java -jar target/WebPhishingFramework.jar ./example/config.json
 To understand the configuration environment, go to
 [Execution Environment](#execution-environment).
 
+
+### Using the docker file
+
+For that option, we advise to use the same structure of
+the [example](example) directory.
+It means, using a single directory containing all the needed
+parameters and files, including the configuration.
+Notice that our Docker image already contains the
+**Geckodriver** binary at `/usr/bin/geckodriver`.
+Thus, from the root directory of this repository, the
+framework can be run as:
+
+```
+docker run -it -v `pwd`/example:/root/environment vrjuliao/web-phishing-framework:latest
+```
+
+
 ## Execution Environment
 
 ### Configuration file

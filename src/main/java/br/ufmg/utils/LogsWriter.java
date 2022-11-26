@@ -1,5 +1,6 @@
 package br.ufmg.utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -124,7 +125,17 @@ public class LogsWriter {
         SimpleDateFormat dataInicio = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String dataFormatada = dataInicio.format(this.currentDate);
         String inicio = "Inicio em " + dataFormatada + "\n";
-        Files.write(this.logDirPath.resolve(this.getStandardFileNameFromSuffix("inicio")), inicio.getBytes());
+        File startTimeFile = this.logDirPath.resolve(this.getStandardFileNameFromSuffix("inicio")).toFile();
+        try {
+            if(!startTimeFile.exists()) {
+                startTimeFile.createNewFile();
+            }
+            Files.write(startTimeFile.toPath(), inicio.getBytes());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println(startTimeFile.getPath());
+            System.exit(-1);
+        }
 
         this.accessLogFileWriter = this.createListOfFileWriters(this.accessLogFilePaths, true);
         this.cadeiaURLsFileWriter = this.createListOfFileWriters(this.cadeiaURLsFilePaths, false);

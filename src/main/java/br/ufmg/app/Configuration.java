@@ -27,7 +27,13 @@ public class Configuration {
         // Get configuration file and the propoer filepaths to get the path of the
         // auxiliar files.
         Path currentWorkDir = Paths.get("").toAbsolutePath();
-        this.configFilePath = Paths.get(currentWorkDir.toString(), configFilePathStr).toAbsolutePath();
+        Path localConfigFilePath = Paths.get(configFilePathStr);
+        if (localConfigFilePath.isAbsolute()) {
+            this.configFilePath = localConfigFilePath;
+        } else {
+            this.configFilePath = Paths.get(currentWorkDir.toString(), configFilePathStr).toAbsolutePath();
+        }
+
 
         // Reading configuration JSON file
         try (FileReader reader = new FileReader(this.configFilePath.toString())) {
