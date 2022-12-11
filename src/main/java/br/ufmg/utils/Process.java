@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,7 +160,8 @@ public class Process implements Runnable {
 		options.setHeadless(true);
 		options.merge(capabilities);
 
-		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, this.logsWriter.getStandardFileNameFromSuffix("null"));
+		Path nullFileLog = this.logsWriter.getLogDirPath().resolve(this.logsWriter.getStandardFileNameFromSuffix("null"));
+		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, nullFileLog.toString());
 		driver = new FirefoxDriver(options);
 	}
 
@@ -185,7 +187,9 @@ public class Process implements Runnable {
 		driver.manage().timeouts().pageLoadTimeout(this.timeout, TimeUnit.SECONDS);
 		String finalUrl = "about:blank";
 		try {
+			this.logsWriter.writeTimeURLs(this.pid, Long.toString(System.currentTimeMillis()) + " ");
 			driver.get(url);
+			this.logsWriter.writeTimeURLs(this.pid, Long.toString(System.currentTimeMillis()) + " ");
 			finalUrl = driver.getCurrentUrl();
 		} catch (Exception e) {
 			if (e instanceof WebDriverException) {
@@ -286,7 +290,8 @@ public class Process implements Runnable {
 				if (restartProcesses.get()) {
 					break;
 				}
-				double startTime = System.currentTimeMillis();
+				long startTime = System.currentTimeMillis();
+				this.logsWriter.writeTimeURLs(this.pid, Long.toString(startTime) + " ");
 				String composedURL = listaUrls.take();
 
 				if (composedURL == "poison_pill") {
@@ -296,7 +301,6 @@ public class Process implements Runnable {
 
 				Response response = accessURL(composedURL);
 				String urlLog = response.getUrlLog();
-				// System.out.println(urlLog);
 				this.logsWriter.writeAccessLog(this.pid, urlLog);
 				this.logsWriter.writeTcp(this.pid, urlLog.replace("\n", ""));
 				this.logsWriter.writeCadeiaURLs(this.pid, urlLog);
@@ -334,11 +338,10 @@ public class Process implements Runnable {
 
 				this.logsWriter.writeTcp(this.pid, "\n*!-@x!x@-!*\n");
 				this.logsWriter.writeCadeiaURLs(this.pid, "*!-@x!x@-!*\n");
-				double tempoFinal = System.currentTimeMillis();
-				this.logsWriter.writeTimeURLs(this.pid, Double.toString((tempoFinal - startTime) / 1000.0) + "\n");
+				long finalTime = System.currentTimeMillis();
+				this.logsWriter.writeTimeURLs(this.pid, Long.toString(finalTime) + "\n");
 
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();

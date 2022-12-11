@@ -126,19 +126,6 @@ public class App {
 	private void manageProcesses() {
 		SimpleDateFormat startDate = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
-		Date date = new Date();
-		String formatedDate = startDate.format(date);
-		String startDateStr = "Started at " + formatedDate + "\n";
-		try {
-			File timeFile = Paths.get(this.logsWriter.getStandardFileNameFromSuffix("inicio")).toFile();
-			if (!timeFile.exists()) {
-				timeFile.createNewFile();
-			}
-			Files.write(timeFile.toPath(), startDateStr.getBytes());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
 		MemoryMonitor memoryMonitor = new MemoryMonitor(restartProcesses);
 		Thread monitor = new Thread(memoryMonitor);
 		monitor.start();
@@ -198,7 +185,6 @@ public class App {
 		for (Thread thread : threadsList) {
 			try {
 				thread.join(1000);
-				// thread.join(600000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -213,7 +199,8 @@ public class App {
 		String timeString = Long.toString(spentTime) + '\n';
 
 		try {
-			File timeFile = Paths.get(this.logsWriter.getStandardFileNameFromSuffix("time")).toFile();
+			Path logDirPath = this.logsWriter.getLogDirPath();
+			File timeFile = logDirPath.resolve(this.logsWriter.getStandardFileNameFromSuffix("time")).toFile();
 			if (!timeFile.exists()) {
 				timeFile.createNewFile();
 			}

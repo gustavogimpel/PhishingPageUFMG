@@ -120,7 +120,13 @@ Such files must be placed into the directory specified by the
   ```
 
 ### Log directories
-TODO
+
+
+* `time_urls`: contains four timestamps  (in milliseconds) containing the respective information:
+  - Start time of the process for one URL.
+  - Start time of the page download.
+  - End time of the page download.
+  - End time of the page processing.
 
 ## License
 Distributed under MIT license.
