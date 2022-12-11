@@ -45,8 +45,7 @@ def run_framework_and_collect_data(current_workdir, config_file_path, logs_dir_p
   memory_percent = []
 
   running_time = datetime.now() - start_time
-  # while(running_time.total_seconds() < (1.5*60*60)): # while the running time is less than two hour and a half
-  while(running_time.total_seconds() < (30)): # while the running time is less than two hour and a half
+  while(running_time.total_seconds() < (1.5*60*60)): # while the running time is less than two hour and a half
     if(web_phishing_framework.poll() is not None):
       break
 
@@ -57,8 +56,7 @@ def run_framework_and_collect_data(current_workdir, config_file_path, logs_dir_p
       memory_percent.append(web_phishing_framework.memory_percent(memtype="rss"))
 
     # sleep for 30 seconds
-    # time.sleep(30)
-    time.sleep(10)
+    time.sleep(30)
     running_time = datetime.now() - start_time
 
   # Kill the framework
