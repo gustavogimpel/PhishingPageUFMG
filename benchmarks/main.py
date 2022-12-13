@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 import json
 from datetime import datetime
-import subprocess
 import time
 
 def get_configuration(logs_dir_path, threads, page_timeout):
@@ -23,7 +22,8 @@ def clear_log_files(log_dir_path):
   to_be_deleted = set(["access_log", "cadeia_urls",
                       "firefox_exception", "http",
                       "http_exception", "source_page",
-                      "tcp", "inicio", "null", "time"])
+                      "tcp", "inicio", "null", "time",
+                      "requests"])
 
   for file_name in os.listdir(log_dir_path):
     if(file_name.find('.') >= 0):
@@ -84,8 +84,7 @@ def main():
   runtime_params_dir =  current_filepath.joinpath("runtime_params")
   os.mkdir(runtime_params_dir)
 
-  # for concurrent_browsers_number in range(1, 9): # threads number starts from 1 and goes to 8.
-  for concurrent_browsers_number in range(5, 9): # threads number starts from 1 and goes to 8.
+  for concurrent_browsers_number in range(1, 9): # threads number starts from 1 and goes to 8.
     for page_timeout in range(15, 61, 15): # starts from 15 seconds to 60 seconds by incrementing 15 seconds on each iteration.
 
       # create runtime environment
@@ -94,9 +93,6 @@ def main():
 
       logs_dir =  current_filepath.joinpath("{}-{}".format(concurrent_browsers_number, page_timeout))
       os.mkdir(logs_dir)
-
-      # create log file
-      # benchmarks_log_file = open(logs_dir.joinpath('out.log'), 'w')
 
       # write variable parameters
       execution_config = get_configuration(logs_dir, concurrent_browsers_number, page_timeout)

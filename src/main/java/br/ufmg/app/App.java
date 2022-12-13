@@ -124,15 +124,11 @@ public class App {
 
 	/* Função principal. Administa o multithreading */
 	private void manageProcesses() {
-		SimpleDateFormat startDate = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-
 		MemoryMonitor memoryMonitor = new MemoryMonitor(restartProcesses);
 		Thread monitor = new Thread(memoryMonitor);
 		monitor.start();
 
-		List<Thread> threadsList = new LinkedList<Thread>();
-
-		Predicate<Thread> isDead = t -> !t.isAlive();
+		List<Thread> threadsList = new ArrayList<Thread>();
 
 		long startTime = System.nanoTime();
 		int index = 0;
@@ -160,8 +156,22 @@ public class App {
 				}
 				restartProcesses.set(false);
 			}
-			threadsList.removeIf(isDead);
+
 			if (threadsList.size() >= this.config.getConcurrentBrowserInstancesNumber()) {
+				for (int i=0; i<threadsList.size(); i++) {
+					if(!threadsList.get(i).isAlive()) {
+						br.ufmg.utils.Process r = new br.ufmg.utils.Process(
+								urlsList, killProcesses, restartProcesses,
+								i, this.logsWriter, whiteList, blackList,
+								this.config.getPageTimeout(),
+								this.config.getMaxRequestNumber(),
+								this.config.getGeckodriverBinPath().toString());
+						Thread t = new Thread(r);
+						t.start();
+						threadsList.set(i, t);
+						System.out.println("[INFO] Restarting thread " + Integer.toString(i));
+					}
+				}
 				try {
 					TimeUnit.SECONDS.sleep(1);
 				} catch (InterruptedException e) {
@@ -190,8 +200,8 @@ public class App {
 			}
 		}
 
-		monitor.interrupt();
 		writeRemainingURLs();
+		monitor.interrupt();
 		System.gc();
 
 		long finalTime = System.nanoTime();
@@ -205,6 +215,8 @@ public class App {
 				timeFile.createNewFile();
 			}
 			Files.write(timeFile.toPath(), timeString.getBytes());
+
+			this.logsWriter.closeFiles();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

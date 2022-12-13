@@ -355,16 +355,5 @@ public class Process implements Runnable {
 
 		}
 
-		terminate();
-	}
-
-	public void terminate() {
-		try {
-			System.out.println("[INFO] Finished process: " + pid + ".");
-			logsWriter.closeFiles();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
