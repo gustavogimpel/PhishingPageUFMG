@@ -10,10 +10,10 @@ def get_configuration(logs_dir_path, threads, page_timeout):
     'concurrentBrowsers': threads,
     'pageTimeout': page_timeout,
     'logsDirPath': str(logs_dir_path),
-    'windowTimeout': 1800,
-    'maxRequests': 60,
+    'windowTimeout': 2000,
+    'maxRequests': 100,
     'repositoryPath': '../../example/repo',
-    'geckodriverBinPath': '/usr/bin/geckodriver',
+    'geckodriverBinPath': '/home/mgimpel/geckodriver',
     'runtimeControllersPath': '../runtime_params'
   }
 
@@ -30,6 +30,7 @@ def clear_log_files(log_dir_path):
       middle_name = file_name.split('.')[1]
       if(middle_name in to_be_deleted):
         # print(log_dir_path.joinpath(file_name))
+        
         os.remove(log_dir_path.joinpath(file_name))
 
 
@@ -84,7 +85,7 @@ def main():
   runtime_params_dir =  current_filepath.joinpath("runtime_params")
   os.mkdir(runtime_params_dir)
 
-  for concurrent_browsers_number in range(1, 9): # threads number starts from 1 and goes to 8.
+  for concurrent_browsers_number in range(1, 11): # threads number starts from 1 and goes to 8.
     for page_timeout in range(15, 61, 15): # starts from 15 seconds to 60 seconds by incrementing 15 seconds on each iteration.
 
       # create runtime environment

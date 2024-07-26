@@ -168,7 +168,7 @@ public class Process implements Runnable {
 	public Response accessURL(String composedURL) {
 		String[] temp = composedURL.split("  ");
 		String url = temp[0];
-		// System.out.println(url);
+		System.out.println(url);
 
 		String dom = "";
 		if (url.contains("http") == true) {

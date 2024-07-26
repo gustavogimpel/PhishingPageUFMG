@@ -1,0 +1,272 @@
+http://amazonaws.com  TimeoutException  0
+*!-@x!x@-!*
+http://office.com  https://www.office.com/  13.107.6.156  3.162.247.18,13.107.6.156,95.101.125.226,2.16.169.235,2.16.169.197,13.107.246.33,63.140.38.210,34.149.100.209,18.67.138.107,18.67.141.142,35.173.166.86,23.201.217.217,99.84.31.31,34.160.144.191,108.158.150.62
+*!-@x!x@-!*
+http://akadns.net  -  0  null
+*!-@x!x@-!*
+http://bing.com  http://www.bing.com/  2.16.169.82  2.16.169.75,2.16.169.82,13.107.21.200,34.107.221.82
+*!-@x!x@-!*
+http://trafficmanager.net  -  0  2.16.169.75,null,2.16.169.82
+*!-@x!x@-!*
+http://domaincontrol.com  http://domaincontrol.com/  127.0.0.1  null,127.0.0.1,2.16.169.69
+*!-@x!x@-!*
+http://icloud.com  https://www.icloud.com/  23.223.239.103  95.101.124.249,17.253.144.10,23.223.239.103
+*!-@x!x@-!*
+http://office.net  -  0  null,23.223.239.103
+*!-@x!x@-!*
+http://t-msedge.net  -  0  null
+*!-@x!x@-!*
+http://digicert.com  TimeoutException  0
+*!-@x!x@-!*
+http://windows.net  http://www.microsoft.com/net  23.201.217.217  20.76.201.171,104.16.118.43
+*!-@x!x@-!*
+http://msn.com  https://www.msn.com/pt-br  204.79.197.203  2.16.169.203,204.79.197.219,204.79.197.203
+*!-@x!x@-!*
+http://google-analytics.com  TimeoutException  0
+*!-@x!x@-!*
+http://edgekey.net  -  0  null
+*!-@x!x@-!*
+http://qq.com  WebDriverException  0
+*!-@x!x@-!*
+http://baidu.com  http://baidu.com/  39.156.66.10  null,39.156.66.10,34.149.100.209,34.160.144.191
+*!-@x!x@-!*
+http://snapchat.com  https://www.snapchat.com/  34.149.46.130  142.251.129.110,142.250.218.200,99.84.31.126,35.190.43.134,18.64.207.113,34.149.46.130,44.202.21.29,18.67.145.124
+*!-@x!x@-!*
+http://europa.eu  https://european-union.europa.eu/index_en  13.249.98.91  142.251.129.110,147.67.34.30,13.35.116.37,13.249.98.91,147.67.210.45,35.190.43.134,34.149.100.209,34.160.144.191,34.149.46.130
+*!-@x!x@-!*
+http://pki.goog  https://pki.goog/  216.239.32.29  216.239.32.29,142.251.129.110,142.250.218.200,172.217.30.67,13.35.116.37,172.217.29.65,142.251.129.10
+*!-@x!x@-!*
+http://gravatar.com  https://gravatar.com/  192.0.80.242  192.0.77.32,192.0.76.3,192.0.80.242,34.107.221.82
+*!-@x!x@-!*
+http://dnsowl.com  -  0  null,192.0.76.3
+*!-@x!x@-!*
+http://wa.me  TimeoutException  0
+*!-@x!x@-!*
+http://registrar-servers.com  http://registrar-servers.com/  198.54.117.206  198.54.117.206
+*!-@x!x@-!*
+http://ui.com  https://ui.com/introduction  108.139.182.119  108.139.182.119,142.251.129.110,151.101.193.140,142.250.218.200,18.67.145.74,108.139.166.37,18.67.145.12,108.139.182.77,54.68.130.97,151.101.1.140,157.240.226.13,157.240.226.35
+*!-@x!x@-!*
+http://vk.com  TimeoutException  0
+*!-@x!x@-!*
+http://epicgames.com  https://store.epicgames.com/en-US/  104.18.2.64  104.18.2.64,95.163.52.67,34.194.11.26,2.17.213.103,3.221.15.59,104.18.20.94,23.44.181.141,13.35.116.81,151.101.194.133,108.158.137.120
+*!-@x!x@-!*
+http://akamaized.net  -  0  null
+*!-@x!x@-!*
+http://omtrdc.net  -  0  null,2.17.213.103
+*!-@x!x@-!*
+http://aiv-cdn.net  -  0  104.18.2.64,null
+*!-@x!x@-!*
+http://w3.org  https://www.w3.org/  104.18.22.19  104.18.22.19
+*!-@x!x@-!*
+http://aliyuncs.com  http://aliyuncs.com/  106.15.148.44  106.15.148.44
+*!-@x!x@-!*
+http://amazon.dev  -  0  null
+*!-@x!x@-!*
+http://theguardian.com  https://www.theguardian.com/international  151.101.129.111  151.101.65.111,52.30.194.77,151.101.1.111,151.101.129.111,151.101.193.111
+*!-@x!x@-!*
+http://taboola.com  TimeoutException  0
+*!-@x!x@-!*
+http://example.com  http://example.com/  93.184.215.14  93.184.215.14
+*!-@x!x@-!*
+http://tiktokcdn-us.com  -  0  null,13.107.21.237
+*!-@x!x@-!*
+http://slack.com  https://slack.com/  54.94.183.148  142.251.129.198,142.250.218.200,54.94.183.148,54.207.84.25,108.158.185.160,108.158.186.118,23.223.238.224,18.161.205.15,142.250.219.2,104.18.30.209
+*!-@x!x@-!*
+http://nginx.com  https://www.f5.com/go/product/welcome-to-nginx  13.227.126.102  108.158.122.6,18.67.130.128,108.158.186.6,159.60.134.0,18.67.130.60,18.67.145.16,108.158.122.71,13.227.126.102
+*!-@x!x@-!*
+http://myfritz.net  https://sso.myfritz.net/  212.42.244.100  212.42.244.72,212.42.244.100
+*!-@x!x@-!*
+http://atomile.com  -  0  null
+*!-@x!x@-!*
+http://shifen.com  TimeoutException  0
+*!-@x!x@-!*
+http://msftconnecttest.com  -  0  null
+*!-@x!x@-!*
+http://scorecardresearch.com  https://www.scorecardresearch.com/home.aspx  165.193.78.252  165.193.78.252,151.101.130.137
+*!-@x!x@-!*
+http://jomodns.com  -  0  null,165.193.78.252
+*!-@x!x@-!*
+http://wixsite.com  -  0  null
+*!-@x!x@-!*
+http://hubspot.com  TimeoutException  0
+*!-@x!x@-!*
+http://wikimedia.org  https://www.wikimedia.org/  208.80.154.224  104.18.138.17,104.16.79.142,44.207.77.235,208.80.154.240,199.60.103.30,104.16.118.116,208.80.154.224,104.16.160.168,104.17.172.91,162.247.243.39,104.16.117.116,172.64.148.142,104.17.128.172
+*!-@x!x@-!*
+http://telecid.ru  WebDriverException  0
+*!-@x!x@-!*
+http://netangels.ru  https://www.netangels.ru/  213.189.223.5  87.250.251.119,213.189.223.6,213.189.223.5
+*!-@x!x@-!*
+http://linktr.ee  https://linktr.ee/  151.101.130.133  151.101.130.133,151.101.2.133,77.88.21.119,151.101.194.133,172.64.155.119
+*!-@x!x@-!*
+http://ibm.com  https://linktr.ee/  151.101.130.133  141.193.213.21,3.163.10.112,151.101.130.133,151.101.2.133,104.18.32.137,104.112.137.78,172.64.155.119
+*!-@x!x@-!*
+http://comfortel.pro  https://comfortel.pro/  82.202.190.155  45.140.76.157,95.163.52.67,95.163.52.89,151.101.2.133,82.202.190.155,77.88.21.119,87.250.251.119,77.223.118.104,157.240.226.13,157.240.226.35
+*!-@x!x@-!*
+http://pubmatic.com  https://pubmatic.com/  15.197.165.128  95.163.52.89,15.197.165.128,2.20.139.44,192.16.48.165,151.101.192.217,162.159.128.61,2.16.169.240,151.101.94.109,3.234.105.81,104.244.42.3,151.101.248.157,13.107.42.14
+*!-@x!x@-!*
+http://weibo.com  https://passport.weibo.com/visitor/visitor?entry=miniblog&a=enter&url=https%3A%2F%2Fweibo.com%2F&domain=weibo.com&ua=Mozilla%2F5.0%20%28X11%3B%20Linux%20x86_64%3B%20rv%3A125.0%29%20Gecko%2F20100101%20Firefox%2F125.0&_rand=1719966899951&sudaref=  36.51.224.27  36.51.224.27,36.51.224.126
+*!-@x!x@-!*
+http://nease.net  http://nease.net/  59.111.129.134  59.111.129.134
+*!-@x!x@-!*
+http://samsungqbe.com  -  0  null
+*!-@x!x@-!*
+http://worldfcdn2.com  -  0  null
+*!-@x!x@-!*
+http://googletagservices.com  -  0  null
+*!-@x!x@-!*
+http://playstation.net  -  0  null
+*!-@x!x@-!*
+http://appcenter.ms  https://appcenter.ms/  13.107.246.33  23.201.217.217,13.107.246.33,23.38.150.4,152.199.55.200
+*!-@x!x@-!*
+http://bloomberg.com  https://www.bloomberg.com/tosv2.html?vid=&uuid=30d81e68-38d4-11ef-8f0c-eaa3036302af&url=Lw==  151.101.129.73  2.18.248.229,151.101.65.73,15.197.146.156,151.101.129.73
+*!-@x!x@-!*
+http://drom.ru  https://www.drom.ru/  185.65.149.115  46.229.162.174,35.190.10.96,151.236.118.252,88.212.201.204,185.65.149.115
+*!-@x!x@-!*
+http://twimg.com  -  0  null
+*!-@x!x@-!*
+http://godaddy.com  https://www.godaddy.com/  23.4.68.85  null,208.109.192.70,23.4.68.85
+*!-@x!x@-!*
+http://att.net  TimeoutException  0
+*!-@x!x@-!*
+http://sapo.pt  TimeoutException  0
+*!-@x!x@-!*
+http://liadm.com  -  0  null,34.96.102.137,213.13.146.142,213.13.146.180,213.13.25.12
+*!-@x!x@-!*
+http://name-services.com  -  0  null
+*!-@x!x@-!*
+http://inmobi.com  https://www.inmobi.com/  20.81.69.107  152.199.52.147,20.81.69.107,172.64.146.132,152.199.55.200
+*!-@x!x@-!*
+http://cnbc.com  https://www.cnbc.com/world/?region=world  23.223.235.66  23.42.198.155,95.101.125.25,18.67.145.7,54.233.247.157,50.234.250.31,108.139.182.126,52.188.247.147,23.223.235.66
+*!-@x!x@-!*
+http://walmart.com  TimeoutException  0
+*!-@x!x@-!*
+http://ibyteimg.com  -  0  null,20.230.171.39
+*!-@x!x@-!*
+http://teads.tv  https://www.teads.com/  95.101.125.108  null,104.17.24.14,52.215.186.190,95.101.125.108,52.84.83.12
+*!-@x!x@-!*
+http://tp-link.com  https://www.tp-link.com/br/  108.158.173.38  18.67.145.94,108.158.173.38,3.211.171.200,108.158.173.7,151.101.130.137
+*!-@x!x@-!*
+http://g.page  TimeoutException  0
+*!-@x!x@-!*
+http://oath.cloud  -  0  null
+*!-@x!x@-!*
+http://statista.com  https://www.statista.com/  52.84.83.118  108.139.182.108,99.84.31.118,108.139.182.56,52.84.83.118,3.5.65.1
+*!-@x!x@-!*
+http://bilibili.com  TimeoutException  0
+*!-@x!x@-!*
+http://kaspersky-labs.com  http://kaspersky-labs.com/  127.0.0.1  157.185.173.17,101.33.25.85,23.236.97.62,127.0.0.1,128.14.222.11
+*!-@x!x@-!*
+http://gamepass.com  TimeoutException  0
+*!-@x!x@-!*
+http://byteoversea.com  -  0  null
+*!-@x!x@-!*
+http://ngenix.net  https://ngenix.net/  46.235.185.111  46.235.185.111,52.182.143.208,23.201.217.183,13.107.246.33,212.193.157.75
+*!-@x!x@-!*
+http://ok.ru  https://ok.ru/  5.61.23.11  95.163.52.67,95.163.52.89,95.163.41.56,217.69.139.209,217.20.155.41,87.250.250.119,5.61.23.11,212.193.157.75,217.20.152.226
+*!-@x!x@-!*
+http://wired.com  TimeoutException  0
+*!-@x!x@-!*
+http://expedia.com  https://www.expedia.com/  95.101.124.226  95.101.124.236,95.101.125.116,95.101.124.226,23.4.71.167,34.120.149.88,23.2.182.234,151.101.0.239
+*!-@x!x@-!*
+http://ft.com  https://www.ft.com/  151.101.2.46  13.33.133.159,151.101.194.46,3.221.243.75,151.101.2.202,151.101.66.46,99.84.31.15,151.101.2.46,130.211.9.123
+*!-@x!x@-!*
+http://online-metrix.net  -  0  null
+*!-@x!x@-!*
+http://fb.com  https://www.facebook.com/  157.240.226.35  157.240.226.35,157.240.226.13
+*!-@x!x@-!*
+http://mayoclinic.org  TimeoutException  0
+*!-@x!x@-!*
+http://upwitheaway.info  http://upwitheaway.info/  3.33.130.190  151.101.93.230,3.33.130.190
+*!-@x!x@-!*
+http://dzen.ru  https://sso.dzen.ru/install?uuid=28ec2b3d-3aa8-4b61-a419-be54e4963d13  62.217.160.14  62.217.160.2,34.206.34.220,93.158.134.144
+*!-@x!x@-!*
+http://deepintent.com  https://www.deepintent.com/  141.193.213.21  141.193.213.21,142.251.129.10
+*!-@x!x@-!*
+http://independent.co.uk  TimeoutException  0
+*!-@x!x@-!*
+http://nypost.com  TimeoutException  0
+*!-@x!x@-!*
+http://mailchimp.com  https://mailchimp.com/  23.38.117.236  2.19.10.49,35.186.205.6,2.17.212.175,54.144.144.142,192.0.76.3,52.85.213.58,23.38.117.236,18.64.174.115,104.112.134.37,23.38.147.48,23.38.117.11,52.84.83.19,35.175.92.6,192.0.66.32
+*!-@x!x@-!*
+http://visualstudio.com  https://visualstudio.microsoft.com/  104.112.135.79  2.16.169.235,23.44.187.29,13.107.246.33,104.112.135.79,13.107.42.18
+*!-@x!x@-!*
+http://line.me  https://line.me/en/  147.92.243.206  20.189.173.7,147.92.243.206,142.251.129.10
+*!-@x!x@-!*
+http://samsungosp.com  -  0  null
+*!-@x!x@-!*
+http://ca.gov  http://ca.gov/  13.87.221.220  
+*!-@x!x@-!*
+http://nelreports.net  -  0  null
+*!-@x!x@-!*
+http://nstld.com  -  0  null
+*!-@x!x@-!*
+http://playstation.com  https://www.playstation.com/pt-br/  95.101.126.71  2.20.139.180,184.169.224.178,104.112.128.42,23.4.64.39,2.17.220.93,104.16.40.28,95.101.126.71
+*!-@x!x@-!*
+http://marriott.com  https://www.marriott.com/default.mi  95.101.124.107  95.101.124.107,23.14.136.107,2.18.248.141,2.16.169.69
+*!-@x!x@-!*
+http://uol.com.br  TimeoutException  0
+*!-@x!x@-!*
+http://cbsnews.com  TimeoutException  0
+*!-@x!x@-!*
+http://yandex.com  https://yandex.com/  77.88.55.88  151.101.53.188,18.64.174.64,77.88.55.88,151.101.93.188,104.18.24.111,45.54.49.5,178.154.131.217
+*!-@x!x@-!*
+http://licdn.com  -  0  null,77.88.55.88
+*!-@x!x@-!*
+http://noaa.gov  http://noaa.gov/  137.75.88.7  
+*!-@x!x@-!*
+http://techcrunch.com  https://techcrunch.com/  76.13.32.141  104.21.50.90,54.156.221.150,162.19.96.35,152.195.55.192,172.64.153.27,76.13.32.141,104.16.160.168,2.20.139.167,104.16.138.209,2.20.139.182
+*!-@x!x@-!*
+http://icloud-content.com  https://developer.apple.com/icloud/  17.253.10.203  17.253.10.203,17.33.202.210,17.253.142.4
+*!-@x!x@-!*
+http://merriam-webster.com  https://www.merriam-webster.com/  3.164.6.34  54.207.187.151,68.67.178.10,204.237.133.116,65.8.214.21,3.162.247.44,23.4.79.178,35.244.193.51,69.173.151.96,18.208.62.139,69.173.146.5,172.64.144.166,13.227.108.22,54.145.89.114,34.200.65.202,44.196.213.242,74.119.117.17,108.139.182.56,3.164.6.34,34.120.133.55,18.67.130.73,3.164.6.129,3.162.247.12,52.207.98.30,107.23.181.93,18.213.84.191,3.162.247.52,35.227.252.103,3.163.10.47,3.163.10.49,52.223.40.198
+*!-@x!x@-!*
+http://yelp.com  https://www.yelp.com.br/belo-horizonte  108.139.182.125  151.101.248.116,151.101.192.116,3.164.6.34,3.162.247.44,151.101.65.108,151.101.129.91,23.201.217.60,108.139.182.125
+*!-@x!x@-!*
+http://google.es  https://www.google.es/?gws_rd=ssl  142.251.129.195  142.251.129.195,172.217.30.163,151.101.192.116
+*!-@x!x@-!*
+http://latimes.com  TimeoutException  0
+*!-@x!x@-!*
+http://omnitagjs.com  -  0  95.101.124.238,null,52.223.22.214,3.232.15.196,151.101.1.108,65.8.214.116,74.119.117.17,34.120.133.55,172.64.149.180,35.244.193.51
+*!-@x!x@-!*
+http://footprintdns.com  -  0  null,3.232.15.196,34.160.158.95
+*!-@x!x@-!*
+http://myqcloud.com  TimeoutException  0
+*!-@x!x@-!*
+http://temu.com  https://www.temu.com/br  172.64.144.50  172.217.192.84,20.15.0.12,152.195.50.250,46.151.194.15,172.64.144.50,172.64.152.105
+*!-@x!x@-!*
+http://amazon.ca  https://www.amazon.ca/  108.139.175.94  13.227.99.48,54.239.18.172,34.196.24.162,108.139.175.94,172.64.144.50
+*!-@x!x@-!*
+http://elpais.com  https://elpais.com/america/  2.20.139.166  2.16.169.75,199.232.198.133,65.8.178.8,142.251.129.2,108.157.173.97,199.232.194.133,172.217.192.84,2.20.139.166,142.251.129.238,104.18.167.224,18.64.174.118
+*!-@x!x@-!*
+http://svc.ms  -  0  null
+*!-@x!x@-!*
+http://nbcnews.com  TimeoutException  0
+*!-@x!x@-!*
+http://amazon.it  https://www.amazon.it/  18.161.202.199  2.18.248.44,23.41.175.7,52.95.116.114,18.161.202.199
+*!-@x!x@-!*
+http://bamgrid.com  -  0  null,99.80.102.12,18.161.202.199
+*!-@x!x@-!*
+http://yximgs.com  http://yximgs.com/  103.107.217.18  103.107.217.18
+*!-@x!x@-!*
+http://riotgames.com  https://www.riotgames.com/en  23.42.136.249  23.42.136.249,151.101.2.217,2.18.248.229,104.18.38.160,23.42.140.21,2.18.248.241,104.16.119.50,52.85.213.99,104.16.40.28
+*!-@x!x@-!*
+http://cloudns.net  https://www.cloudns.net/  136.243.33.126  148.251.246.12,136.243.33.126
+*!-@x!x@-!*
+http://1rx.io  -  0  null
+*!-@x!x@-!*
+http://shein.com  TimeoutException  0
+*!-@x!x@-!*
+http://hostgator.com.br  https://www.hostgator.com.br/  172.66.43.218  104.17.72.14,172.66.40.38,52.216.162.69,104.16.79.73,18.215.190.212,104.18.28.83,172.66.43.218
+*!-@x!x@-!*
+http://lemonde.fr  https://www.lemonde.fr/  151.101.2.217  151.101.2.137,151.101.2.217,52.216.162.69,104.21.37.193,2.18.248.231,35.237.183.236,151.101.130.217
+*!-@x!x@-!*
+http://steamstatic.com  -  0  null
+*!-@x!x@-!*
+http://rapid7.com  https://www.rapid7.com/  3.163.10.10  151.101.2.137,3.163.10.63,3.163.10.10,151.101.65.181,104.17.202.1,104.18.166.88,2.17.220.191
+*!-@x!x@-!*
+http://finn.no  https://www.finn.no/  35.228.105.46  151.101.1.108,108.156.83.55,35.228.105.46,151.101.65.181,46.151.194.33,151.101.65.63,3.164.6.105,46.151.194.15,18.67.145.31,151.101.193.62,65.8.248.64,108.139.182.94
+*!-@x!x@-!*
+http://cdnhwc1.com  -  0  null,51.20.228.95,35.228.105.46,151.101.193.62
+*!-@x!x@-!*
+http://tremorhub.com  http://tremorhub.com/  13.227.126.29  13.227.126.29
+*!-@x!x@-!*

@@ -1,0 +1,286 @@
+http://akamai.net  -  0  null
+*!-@x!x@-!*
+http://cloudflare.com  TimeoutException  0
+*!-@x!x@-!*
+http://bing.com  http://www.bing.com/  2.16.169.71  2.16.169.66,2.16.169.71,104.18.30.78,13.107.21.200,34.149.100.209,104.16.123.96
+*!-@x!x@-!*
+http://github.com  https://github.com/  20.201.28.151  20.201.28.151,2.16.169.71,34.149.100.209,185.199.108.154,34.160.144.191
+*!-@x!x@-!*
+http://sharepoint.com  TimeoutException  0
+*!-@x!x@-!*
+http://yandex.net  TimeoutException  0
+*!-@x!x@-!*
+http://cloudflare.net  http://cloudflare.net/  104.17.156.85  104.17.156.85,104.17.2.184,178.154.131.217,104.16.80.73
+*!-@x!x@-!*
+http://tiktok.com  http://cloudflare.net/  104.17.156.85  null,104.17.156.85
+*!-@x!x@-!*
+http://googledomains.com  TimeoutException  0
+*!-@x!x@-!*
+http://appsflyersdk.com  -  0  null
+*!-@x!x@-!*
+http://app-measurement.com  http://app-measurement.com/  142.251.132.46  142.251.132.46
+*!-@x!x@-!*
+http://pki.goog  https://pki.goog/  216.239.32.29  216.239.32.29,142.250.219.46,172.217.29.234,142.250.218.225,172.217.30.72,172.217.162.99,142.250.218.227
+*!-@x!x@-!*
+http://t-mobile.com  https://www.t-mobile.com/  2.16.169.79  45.60.151.103,95.101.125.25,104.17.247.203,2.20.139.175,2.16.169.79
+*!-@x!x@-!*
+http://edgesuite.net  -  0  null,95.101.125.25,2.16.169.79,45.60.163.127
+*!-@x!x@-!*
+http://nist.gov  http://nist.gov/  129.6.13.49  
+*!-@x!x@-!*
+http://rbxcdn.com  -  0  null
+*!-@x!x@-!*
+http://paypal.com  https://www.paypal.com/br/home  151.101.1.21  151.101.65.21,151.101.1.35,151.101.1.21,192.16.48.237
+*!-@x!x@-!*
+http://miit.gov.cn  -  0  151.101.1.21
+*!-@x!x@-!*
+http://w3.org  https://www.w3.org/  104.18.23.19  104.18.23.19,104.18.22.19
+*!-@x!x@-!*
+http://android.com  TimeoutException  0
+*!-@x!x@-!*
+http://demdex.net  -  0  null
+*!-@x!x@-!*
+http://akamaihd.net  -  0  null
+*!-@x!x@-!*
+http://doubleverify.com  TimeoutException  0
+*!-@x!x@-!*
+http://edgecdn.ru  TimeoutException  0
+*!-@x!x@-!*
+http://ubuntu.com  https://ubuntu.com/  185.125.190.29  34.96.102.137,185.125.190.21,185.125.190.29
+*!-@x!x@-!*
+http://taobao.com  TimeoutException  0
+*!-@x!x@-!*
+http://discord.com  TimeoutException  0
+*!-@x!x@-!*
+http://doi.org  https://www.doi.org/  18.67.130.47  13.32.87.106,151.101.1.229,18.67.130.47,104.18.34.227,162.159.129.233,142.250.218.202,23.212.191.101,23.212.191.112,104.21.90.106,172.217.162.99
+*!-@x!x@-!*
+http://linktr.ee  https://linktr.ee/  151.101.130.133  151.101.130.133,104.18.32.137,151.101.2.133,172.64.155.119
+*!-@x!x@-!*
+http://washingtonpost.com  TimeoutException  0
+*!-@x!x@-!*
+http://dailymail.co.uk  TimeoutException  0
+*!-@x!x@-!*
+http://crashlytics.com  https://firebase.google.com/products/crashlytics/  142.250.218.206  216.239.32.29,172.217.29.234,142.250.218.206,3.33.235.18
+*!-@x!x@-!*
+http://media-amazon.com  -  0  null
+*!-@x!x@-!*
+http://weather.com  TimeoutException  0
+*!-@x!x@-!*
+http://allawnos.com  -  0  null,104.112.127.20,95.101.124.169,108.139.182.44
+*!-@x!x@-!*
+http://mi.com  TimeoutException  0
+*!-@x!x@-!*
+http://inmobi.com  TimeoutException  0
+*!-@x!x@-!*
+http://walmart.com  TimeoutException  0
+*!-@x!x@-!*
+http://mozilla.com  TimeoutException  0
+*!-@x!x@-!*
+http://sophos.com  TimeoutException  0
+*!-@x!x@-!*
+http://oath.cloud  -  0  null
+*!-@x!x@-!*
+http://wix.com  TimeoutException  0
+*!-@x!x@-!*
+http://pixabay.com  TimeoutException  0
+*!-@x!x@-!*
+http://sc-gw.com  -  0  null,172.64.147.160,172.64.155.119
+*!-@x!x@-!*
+http://ttvnw.net  -  0  null
+*!-@x!x@-!*
+http://zendesk.com  TimeoutException  0
+*!-@x!x@-!*
+http://uber.com  https://www.uber.com/br/pt-br/  69.48.216.12  13.227.126.78,18.67.124.169,3.162.247.39,69.48.216.12
+*!-@x!x@-!*
+http://telegram.me  TimeoutException  0
+*!-@x!x@-!*
+http://gosuslugi.ru  TimeoutException  0
+*!-@x!x@-!*
+http://deepintent.com  https://www.deepintent.com/  141.193.213.20  141.193.213.20
+*!-@x!x@-!*
+http://amazontrust.com  https://www.amazontrust.com/index.html  18.67.130.50  18.67.145.44,18.67.130.50
+*!-@x!x@-!*
+http://goskope.com  -  0  null
+*!-@x!x@-!*
+http://xvideos.com  TimeoutException  0
+*!-@x!x@-!*
+http://netease.com  TimeoutException  0
+*!-@x!x@-!*
+http://dnspod.net  TimeoutException  0
+*!-@x!x@-!*
+http://mozgcp.net  -  0  null
+*!-@x!x@-!*
+http://sina.com.cn  TimeoutException  0
+*!-@x!x@-!*
+http://spaceweb.pro  http://spaceweb.pro/  77.222.41.152  128.14.116.234,128.14.116.231,128.14.116.230,42.177.83.87,77.222.41.152,128.14.116.237,128.14.116.235
+*!-@x!x@-!*
+http://ietf.org  TimeoutException  0
+*!-@x!x@-!*
+http://myspace.com  TimeoutException  0
+*!-@x!x@-!*
+http://google.co.in  https://www.google.co.in/?gws_rd=ssl  142.251.129.99  72.21.91.78,142.251.129.99,142.250.218.227,34.111.176.156
+*!-@x!x@-!*
+http://live.net  -  0  null
+*!-@x!x@-!*
+http://igamecj.com  -  0  null
+*!-@x!x@-!*
+http://britannica.com  TimeoutException  0
+*!-@x!x@-!*
+http://imrworldwide.com  -  0  null,18.67.130.76
+*!-@x!x@-!*
+http://target.com  TimeoutException  0
+*!-@x!x@-!*
+http://ieee.org  TimeoutException  0
+*!-@x!x@-!*
+http://jotform.com  TimeoutException  0
+*!-@x!x@-!*
+http://pornhub.com  TimeoutException  0
+*!-@x!x@-!*
+http://ks-cdn.com  -  0  null
+*!-@x!x@-!*
+http://cookiedatabase.org  https://cookiedatabase.org/  104.17.46.19  104.17.46.19,104.21.13.135
+*!-@x!x@-!*
+http://networkadvertising.org  TimeoutException  0
+*!-@x!x@-!*
+http://people.com  https://people.com/  151.101.2.137  151.101.2.137
+*!-@x!x@-!*
+http://mlb.com  TimeoutException  0
+*!-@x!x@-!*
+http://zillow.com  TimeoutException  0
+*!-@x!x@-!*
+http://kickstarter.com  TimeoutException  0
+*!-@x!x@-!*
+http://stickyadstv.com  TimeoutException  0
+*!-@x!x@-!*
+http://maricopa.gov  http://maricopa.gov/  50.63.161.93  
+*!-@x!x@-!*
+http://discordapp.com  TimeoutException  0
+*!-@x!x@-!*
+http://bootstrapcdn.com  TimeoutException  0
+*!-@x!x@-!*
+http://heylink.me  TimeoutException  0
+*!-@x!x@-!*
+http://githubusercontent.com  -  0  null
+*!-@x!x@-!*
+http://otto.de  TimeoutException  0
+*!-@x!x@-!*
+http://columbia.edu  https://www.columbia.edu/  162.159.128.65  162.159.138.64,162.159.128.65,162.159.128.61,141.101.90.18
+*!-@x!x@-!*
+http://liftoff.io  TimeoutException  0
+*!-@x!x@-!*
+http://kohls.com  TimeoutException  0
+*!-@x!x@-!*
+http://exelator.com  TimeoutException  0
+*!-@x!x@-!*
+http://perfectdomain.com  https://perfectdomain.com/  104.26.4.218  104.26.4.218
+*!-@x!x@-!*
+http://binance.com  TimeoutException  0
+*!-@x!x@-!*
+http://wp.pl  TimeoutException  0
+*!-@x!x@-!*
+http://jimdo.com  TimeoutException  0
+*!-@x!x@-!*
+http://corriere.it  TimeoutException  0
+*!-@x!x@-!*
+http://hilton.com  TimeoutException  0
+*!-@x!x@-!*
+http://onesignal.com  https://onesignal.com/  104.17.111.223  104.17.111.223,95.101.124.109
+*!-@x!x@-!*
+http://utorrent.com  TimeoutException  0
+*!-@x!x@-!*
+http://skroutz.gr  https://www.skroutz.gr/  104.18.33.11  185.6.76.42,104.18.33.11,108.139.166.48
+*!-@x!x@-!*
+http://amazon.com.mx  https://www.skroutz.gr/  104.18.33.11  104.18.33.11,54.239.18.174
+*!-@x!x@-!*
+http://chegg.com  TimeoutException  0
+*!-@x!x@-!*
+http://ubi.com  TimeoutException  0
+*!-@x!x@-!*
+http://awswaf.com  -  0  null
+*!-@x!x@-!*
+http://trendyol.com  https://www.trendyol.com/en/select-country  104.18.175.21  104.16.79.73,104.18.175.21,104.18.174.21,185.155.102.61
+*!-@x!x@-!*
+http://rfihub.com  -  0  null,104.16.150.136,185.155.102.61
+*!-@x!x@-!*
+http://psu.edu  https://www.psu.edu/  108.158.173.81  142.251.132.42,108.158.173.81,75.2.126.119
+*!-@x!x@-!*
+http://trellix.com  TimeoutException  0
+*!-@x!x@-!*
+http://mathtag.com  TimeoutException  0
+*!-@x!x@-!*
+http://goal.com  TimeoutException  0
+*!-@x!x@-!*
+http://livedoor.jp  http://livedoor.jp/  147.92.240.79  null,147.92.240.79,2.16.169.198,2.16.169.68,2.20.139.73
+*!-@x!x@-!*
+http://ipify.org  TimeoutException  0
+*!-@x!x@-!*
+http://cloudinary.com  TimeoutException  0
+*!-@x!x@-!*
+http://dyndns.org  TimeoutException  0
+*!-@x!x@-!*
+http://infonline.de  TimeoutException  0
+*!-@x!x@-!*
+http://ad.nl  TimeoutException  0
+*!-@x!x@-!*
+http://frontiersin.org  TimeoutException  0
+*!-@x!x@-!*
+http://rackcdn.com  -  0  null,2.18.248.238,2.20.139.78,2.20.139.37,2.20.139.243,2.18.248.243,2.20.139.70
+*!-@x!x@-!*
+http://hurriyet.com.tr  TimeoutException  0
+*!-@x!x@-!*
+http://tabelog.com  TimeoutException  0
+*!-@x!x@-!*
+http://cricbuzz.com  TimeoutException  0
+*!-@x!x@-!*
+http://tribunnews.com  TimeoutException  0
+*!-@x!x@-!*
+http://iponweb.net  TimeoutException  0
+*!-@x!x@-!*
+http://google.com.au  https://www.google.com.au/?gws_rd=ssl  142.251.129.131  142.251.129.131,142.251.129.35
+*!-@x!x@-!*
+http://coursera.org  https://www.coursera.org/  108.139.166.118  108.139.166.56,108.139.166.118,151.101.66.217,108.158.147.55
+*!-@x!x@-!*
+http://furaffinity.net  TimeoutException  0
+*!-@x!x@-!*
+http://aadrm.com  -  0  null,138.199.41.120,35.211.178.172,69.173.151.100,8.28.7.82,52.23.83.162,2.17.212.231,37.157.4.29,68.67.160.132,35.186.253.211,8.28.7.105,147.75.195.77
+*!-@x!x@-!*
+http://idealista.com  TimeoutException  0
+*!-@x!x@-!*
+http://hltv.org  TimeoutException  0
+*!-@x!x@-!*
+http://algolia.net  http://algolia.net/  149.202.84.123  172.64.146.44,23.223.237.6,2.16.169.73,104.18.41.212,149.202.84.123
+*!-@x!x@-!*
+http://ntppool.org  https://www.ntppool.org/en/  151.101.1.55  3.162.247.36,138.68.18.155,151.101.130.137,151.101.1.55
+*!-@x!x@-!*
+http://samsungknox.com  https://www.samsungknox.com/en  52.50.114.126  104.18.11.207,54.171.207.59,52.50.114.126,138.68.18.155,99.84.252.17
+*!-@x!x@-!*
+http://mat6tube.com  https://mat6tube.com/recent  141.101.120.11  141.101.120.11
+*!-@x!x@-!*
+http://imhentai.xxx  TimeoutException  0
+*!-@x!x@-!*
+http://cardgames.io  https://cardgames.io/  108.158.173.113  104.18.11.207,108.158.173.113,104.18.10.207,104.26.13.229
+*!-@x!x@-!*
+http://divar.ir  https://divar.ir/  185.166.104.4  185.166.104.4
+*!-@x!x@-!*
+http://superporn.com  TimeoutException  0
+*!-@x!x@-!*
+http://index.hr  TimeoutException  0
+*!-@x!x@-!*
+http://nesine.com  TimeoutException  0
+*!-@x!x@-!*
+http://turkiye.gov.tr  http://turkiye.gov.tr/  94.55.118.33  217.74.26.158
+*!-@x!x@-!*
+http://wordwall.net  https://wordwall.net/  20.238.3.66  20.238.3.66,13.107.246.34,152.199.55.200
+*!-@x!x@-!*
+http://science.org  TimeoutException  0
+*!-@x!x@-!*
+http://ekstrabladet.dk  TimeoutException  0
+*!-@x!x@-!*
+http://xhwide4.com  TimeoutException  0
+*!-@x!x@-!*
+http://quantummetric.com  https://www.quantummetric.com/  172.67.20.158  104.16.71.105,46.151.194.30,104.18.40.68,172.67.20.158
+*!-@x!x@-!*
+http://happymod.com  https://happymod.com/  172.67.186.170  172.67.186.170
+*!-@x!x@-!*
+http://bato.to  TimeoutException  0
+*!-@x!x@-!*
